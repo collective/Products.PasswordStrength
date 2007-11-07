@@ -11,6 +11,8 @@ Requires:
  - PluggableAuthService and its dependencies
 
  - (optional) PlonePAS and its dependencies
+ 
+ - Plone 2.5
 
 
 Installation
