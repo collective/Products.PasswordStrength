@@ -34,6 +34,11 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 log = logging.getLogger('PasswordStrength')
 
 
+PROJECTNAME = 'PasswordStrength'
+PLUGIN_ID = 'password_strength_plugin'
+PLUGIN_TITLE = 'Create your own rules for enforcing password strength'
+
+
 
 from patch import wrapAllMethods
 from Products.CMFPlone.RegistrationTool import RegistrationTool
