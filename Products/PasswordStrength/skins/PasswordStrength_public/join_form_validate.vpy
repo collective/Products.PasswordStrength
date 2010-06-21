@@ -20,15 +20,16 @@ def minlimit(field):
 def notallowed(field):
     state.setError(field, _(u'This username is reserved. Please choose a different name.'), 'not_allowed')
 
+portal = context.portal_url.getPortalObject()
+
 if not username:
     missing('username')
 if not email:
     missing('email')
-if username and username == context.portal_url.getPortalObject().getId():
+if username and username == portal.getId():
     notallowed('username')
 
-properties = context.portal_properties.site_properties
-if not properties.validate_email:
+if not portal.validate_email:
      if password!=password_confirm:
          nomatch('password')
          nomatch('password_confirm')
@@ -38,13 +39,9 @@ if not properties.validate_email:
      if not password_confirm:
          missing('password_confirm')
 
-     
-	# Altered so testPasswordValidity can be used instead
-     if not state.getError('password'):
-     	 error = context.portal_registration.testPasswordValidity(password, password_confirm)
-     	 if error:
-			 state.setError('password', error)
-			 state.setError('password_confirm', error)
+     if not state.getError('password') and len(password) < 5:
+         minlimit('password')
+         minlimit('password_confirm')
 
 if not state.getError('username') and not reg_tool.isMemberIdAllowed(username):
     state.setError('username',
@@ -52,8 +49,7 @@ if not state.getError('username') and not reg_tool.isMemberIdAllowed(username):
                    'username_invalid' )
 
 if state.getErrors():
-    context.plone_utils.addPortalMessage(_(u'Please correct the indicated errors.'))
+    context.plone_utils.addPortalMessage(_(u'Please correct the indicated errors.'), 'error')
     return state.set(status='failure')
-else:
-    context.plone_utils.addPortalMessage(_(u'You have been registered.'))
-    return state
+
+return state

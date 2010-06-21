@@ -1,4 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="plone">
@@ -6,18 +9,35 @@
 <head>
     <metal:block fill-slot="top_slot"
                  tal:define="dummy python:request.set('disable_border',1)" />
+    <metal:block fill-slot="column_one_slot" />
+    <metal:block fill-slot="column_two_slot" />
 </head>
 
 <body>
 
 <div metal:fill-slot="main"
-     tal:define="errors options/state/getErrors;">
+     tal:define="errors options/state/getErrors;
+                 mailhost context/MailHost/smtp_host|nothing;
+                 mailfrom context/email_from_address|nothing;
+                 site_properties context/portal_properties/site_properties;
+                 allowEnterPassword not:utool/getPortalObject/validate_email|nothing;
+                 mailpw site_properties/validate_email;
+                 mailconfigured python:allowEnterPassword or (mailhost and mailfrom)">
 
-  <h1 i18n:translate="heading_registration_form">Registration Form</h1>
+  <h1 class="documentFirstHeading"
+      i18n:translate="heading_registration_form">Registration Form</h1>
 
+
+  <div tal:condition="not:mailconfigured">
+    <p i18n:translate="no_join_without_configured_mail">
+      This site has not configured its email settings. Until email has
+      been configured it is not possible to create an account.
+    </p>
+  </div>
   <form action=""
+        class="enableAutoFocus enableUnloadProtection"
         method="post"
-        class="enableUnloadProtection"
+        tal:condition="mailconfigured"
         tal:define="allowEnterPassword site_properties/validate_email|nothing;"
         tal:attributes="action template_id" >
 
@@ -56,9 +76,7 @@
                id="fullname"
                size="30"
                value="fullname"
-               tabindex=""
-               tal:attributes="value fullname;
-                               tabindex tabindex/next;"
+               tal:attributes="value fullname;"
                />
 
       </div>
@@ -91,9 +109,7 @@
                      id="username"
                      size="30"
                      value="username"
-                     tabindex=""
-                     tal:attributes="value username;
-                                     tabindex tabindex/next;"
+                     tal:attributes="value username;"
                      />
       </div>
 
@@ -121,9 +137,7 @@
                      name="email"
                      id="email"
                      size="30"
-                     tabindex=""
-                     tal:attributes="value email;
-                                     tabindex tabindex/next;"
+                     tal:attributes="value email;"
                      />
       </div>
 
@@ -141,8 +155,7 @@
               i18n:attributes="title title_required;"
               i18n:translate="label_required">(Required)</span>
 
-              <div class="formHelp" 
-                  tal:content="python:here.portal_registration.testPasswordValidity(' ')">
+              <div class="formHelp" i18n:translate="help_password_creation">
                 Minimum 5 characters.
               </div>
 
@@ -153,8 +166,6 @@
                      id="password"
                      size="10"
                      value=""
-                     tabindex=""
-                     tal:attributes="tabindex tabindex/next;"
                      />
       </div>
 
@@ -183,8 +194,6 @@
                      id="password_confirm"
                      size="10"
                      value=""
-                     tabindex=""
-                     tal:attributes="tabindex tabindex/next;"
                      />
       </div>
 
@@ -197,9 +206,7 @@
                name="mail_me"
                size="30"
                id="cb_mailme"
-               tabindex=""
-               tal:attributes="checked python:test(mail_me, 'checked', None);
-                               tabindex tabindex/next;"
+               tal:attributes="checked python:test(mail_me, 'checked', None);"
                />
         <label for="cb_mailme" i18n:translate="label_mail_password">Send a mail with the password</label>
       </div>
@@ -217,16 +224,16 @@
       <div class="formControls">
         <input class="context"
                type="submit"
-               tabindex=""
                name="form.button.Register"
                value="Register"
-               i18n:attributes="value label_register;"
-               tal:attributes="tabindex tabindex/next;" />
+               i18n:attributes="value label_register;" />
       </div>
 
     </fieldset>
 
     <input type="hidden" name="form.submitted" value="1" />
+
+    <input tal:replace="structure context/@@authenticator/authenticator" />
 
   </form>
 </div>
