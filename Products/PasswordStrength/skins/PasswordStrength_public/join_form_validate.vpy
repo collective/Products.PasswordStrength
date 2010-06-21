@@ -44,7 +44,6 @@ if not portal.validate_email:
         error = context.portal_registration.testPasswordValidity(password, password_confirm)
         if error:
                         state.setError('password', error)
-                        state.setError('password_confirm', error)
 
 if not state.getError('username') and not reg_tool.isMemberIdAllowed(username):
     state.setError('username',
