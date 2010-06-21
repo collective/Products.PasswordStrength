@@ -55,7 +55,7 @@
 	                   <div tal:content="error">Validation error output</div>
 
                     <div class="formHelp" 
-                         i18n:translate="help_new_password">
+                         tal:content="python:here.portal_registration.testPasswordValidity(' ')">
                         Enter your new password. Minimum 5 characters.
                     </div>
 

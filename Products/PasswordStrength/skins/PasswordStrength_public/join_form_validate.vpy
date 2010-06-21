@@ -39,9 +39,12 @@ if not portal.validate_email:
      if not password_confirm:
          missing('password_confirm')
 
-     if not state.getError('password') and len(password) < 5:
-         minlimit('password')
-         minlimit('password_confirm')
+     # Altered so testPasswordValidity can be used instead
+     if not state.getError('password'):
+        error = context.portal_registration.testPasswordValidity(password, password_confirm)
+        if error:
+                        state.setError('password', error)
+                        state.setError('password_confirm', error)
 
 if not state.getError('username') and not reg_tool.isMemberIdAllowed(username):
     state.setError('username',

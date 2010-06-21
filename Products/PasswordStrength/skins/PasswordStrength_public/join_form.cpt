@@ -155,7 +155,8 @@
               i18n:attributes="title title_required;"
               i18n:translate="label_required">(Required)</span>
 
-              <div class="formHelp" i18n:translate="help_password_creation">
+              <div class="formHelp" 
+                  tal:content="python:here.portal_registration.testPasswordValidity(' ')">
                 Minimum 5 characters.
               </div>
 
