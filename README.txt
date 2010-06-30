@@ -12,7 +12,7 @@ Requires:
 
  - (optional) PlonePAS and its dependencies
  
- - Plone 2.5
+ - Plone 3.x
 
 
 Installation
