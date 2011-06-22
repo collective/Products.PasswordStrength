@@ -76,7 +76,7 @@ class RegistrationToolPatch:
         else:
             return None
 
-wrapAllMethods(RegistrationToolPatch,RegistrationTool)
+#wrapAllMethods(RegistrationToolPatch,RegistrationTool)
 
 
 manage_addPasswordStrengthForm = PageTemplateFile(
@@ -202,7 +202,7 @@ class PasswordStrength(BasePlugin, Cacheable):
 
         errors = []
         
-        if set_info and set_info.get('password', None):
+        if set_info and set_info.get('password', None) is not None: 
             password = set_info['password']
             
             i = 1
