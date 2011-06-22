@@ -31,6 +31,10 @@ Installation
 
   That's it! Test it out.
 
+  Note: PasswordStength doesn't currently generate new passwords. This means that
+  you will need to change Plones security settings such that users manually enter
+  passwords rather than autogenerate them.
+
 
 Implementation
 
@@ -41,6 +45,15 @@ Implementation
   Plone doesn't use PAS to validate passwords so included is a patch to
   Products.CMFPlone.RegistrationTool.RegistrationTool.testPasswordValidity
   which makes plone use PAS validation plugins.
+
+TODO
+
+  1. Do password generation from regexp. This looks possible
+   http://stackoverflow.com/questions/492716/reversing-a-regular-expression-in-python
+
+  2. Do password expiration
+
+
 
 Copyright, License, Author
 

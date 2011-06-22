@@ -7,8 +7,6 @@ from Products.CMFCore.permissions import ManagePortal
 # for installing skin
 from Products.CMFCore.DirectoryView import addDirectoryViews
 
-# for adding tool
-from Products.LoginLockout.config import TOOL_ID, CONFIGLETS
 
 def setupPasswordStrength(context):
     if context.readDataFile('passwordstrength.txt') is None:

@@ -38,6 +38,7 @@ setup(name='Products.PasswordStrength',
           # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
       ],
       entry_points="""
-      # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )
