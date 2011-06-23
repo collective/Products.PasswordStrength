@@ -24,12 +24,16 @@ from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.permissions import ManageUsers
 from Products.PluggableAuthService.utils import classImplements
 from Products.PluggableAuthService.interfaces.plugins import \
-    IValidationPlugin
+    IValidationPlugin, IPropertiesPlugin
 
 import re
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
+from patch import wrapAllMethods
+from Products.CMFPlone.RegistrationTool import RegistrationTool
+import hashlib
+import random
 
 log = logging.getLogger('PasswordStrength')
 
@@ -40,8 +44,6 @@ PLUGIN_TITLE = 'Create your own rules for enforcing password strength'
 
 
 
-from patch import wrapAllMethods
-from Products.CMFPlone.RegistrationTool import RegistrationTool
 
 
 class RegistrationToolPatch:
@@ -218,9 +220,16 @@ class PasswordStrength(BasePlugin, Cacheable):
             errors = [{'id':'password','error':e} for e in errors] 
         return errors
 
+    def getPropertiesForUser(self, user, request=None):
+        # HACK to get
+        hash = hashlib.md5(str(random.random())).hexdigest()
+        return {'generated_password':'A-'+hash}
+
 
 classImplements(PasswordStrength,
                 IValidationPlugin)
+classImplements(PasswordStrength,
+                IPropertiesPlugin)
 
 InitializeClass(PasswordStrength)
 
