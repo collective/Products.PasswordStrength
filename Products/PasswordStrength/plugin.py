@@ -228,15 +228,9 @@ class PasswordStrength(BasePlugin, Cacheable):
             errors = [{'id':'password','error':e} for e in errors]
         return errors
 
-    def getPropertiesForUser(self, user, request=None):
-        # HACK to get
-        hash = hashlib.md5(str(random.random())).hexdigest()
-        return {'generated_password':'A-'+hash}
 
 classImplements(PasswordStrength,
                 IValidationPlugin)
-classImplements(PasswordStrength,
-                IPropertiesPlugin)
 
 InitializeClass(PasswordStrength)
 
