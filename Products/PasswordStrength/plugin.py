@@ -78,7 +78,7 @@ class RegistrationToolPatch:
         else:
             return None
 
-#wrapAllMethods(RegistrationToolPatch,RegistrationTool)
+wrapAllMethods(RegistrationToolPatch,RegistrationTool)
 
 
 manage_addPasswordStrengthForm = PageTemplateFile(
@@ -225,7 +225,6 @@ class PasswordStrength(BasePlugin, Cacheable):
         hash = hashlib.md5(str(random.random())).hexdigest()
         return {'generated_password':'A-'+hash}
 
-
 classImplements(PasswordStrength,
                 IValidationPlugin)
 classImplements(PasswordStrength,
@@ -233,7 +232,31 @@ classImplements(PasswordStrength,
 
 InitializeClass(PasswordStrength)
 
+# Monkey patch for Password fields, to get validation before form submission.
+# This is required for this to be useable in Plone 4s @@new-user form.
 
+from zope.schema import Password
+from zope.schema.interfaces import ValidationError
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone import PloneMessageFactory as _
 
+class CustomPasswordError(ValidationError):
+    __doc__ = _("This password doesn't match requirements for passwords")
 
+def validate(self, value):
+    try:
+        existing = bool(self.get(self.context))
+    except AttributeError:
+        existing = False
+    if value is self.UNCHANGED_PASSWORD and existing:
+        # Allow the UNCHANGED_PASSWORD value, if a password is set already
+        return
+    
+    reg_tool = getToolByName(self.context, 'portal_registration')
+    errors = reg_tool.testPasswordValidity(value)
+    if errors:
+        raise CustomPasswordError(errors)
+    
+    return super(Password, self).validate(value)
 
+Password.validate = validate

@@ -1,6 +1,17 @@
 Changes
 -------
 
+0.3 - Unreleased
+================
+
+* Added a monkey-patch for the zope.schema Password field to validate
+  the password. This is necessary for the Plone 4 @@new-user form to
+  work well. [regebro]
+
+
+Earlier versions
+================
+
 0.2 - Packaged as egg. Plone 3.1 compatible
 
 0.1 - Initial version. Plone 2.5 compatible
