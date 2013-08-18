@@ -1,7 +1,7 @@
 Changes
 -------
 
-0.3 - Unreleased
+0.3 (2013-08-18)
 ================
 
 * Added a monkey-patch for the zope.schema Password field to validate

@@ -12,7 +12,7 @@ Requires:
 
  - (optional) PlonePAS and its dependencies
  
- - Plone 3.x or 4.x
+ - Plone 4.1 or 4.2.
 
 
 Installation
@@ -49,7 +49,7 @@ Implementation
 TODO
 
   1. Do password generation from regexp. This looks possible
-   http://stackoverflow.com/questions/492716/reversing-a-regular-expression-in-python
+     http://stackoverflow.com/questions/492716/reversing-a-regular-expression-in-python
 
   2. Do password expiration
 
