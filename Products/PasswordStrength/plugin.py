@@ -179,15 +179,15 @@ class PasswordStrength(BasePlugin, Cacheable):
     def __init__(self, id, title=None):
         self._id = self.id = id
         self.title = title
-        
+
         i = 1
         for reg,err in DEFUALT_POLICIES:
             setattr(self, 'p%i_re' % i, reg)
             setattr(self, 'p%i_err' % i, err)
             i+=1
-        
-        
-        
+
+
+
 
     security.declarePrivate('validateUserInfo')
     def validateUserInfo(self, user, set_id, set_info ):
@@ -203,10 +203,10 @@ class PasswordStrength(BasePlugin, Cacheable):
         """
 
         errors = []
-        
-        if set_info and set_info.get('password', None) is not None: 
+
+        if set_info and set_info.get('password', None) is not None:
             password = set_info['password']
-            
+
             i = 1
             while True:
                 reg = getattr(self, 'p%i_re' % i, None)
@@ -217,7 +217,7 @@ class PasswordStrength(BasePlugin, Cacheable):
                     errors += [err]
                 i += 1
 
-            errors = [{'id':'password','error':e} for e in errors] 
+            errors = [{'id':'password','error':e} for e in errors]
         return errors
 
     def getPropertiesForUser(self, user, request=None):
@@ -251,12 +251,12 @@ def validate(self, value):
     if value is self.UNCHANGED_PASSWORD and existing:
         # Allow the UNCHANGED_PASSWORD value, if a password is set already
         return
-    
+
     reg_tool = getToolByName(self.context, 'portal_registration')
     errors = reg_tool.testPasswordValidity(value)
     if errors:
         raise CustomPasswordError(errors)
-    
+
     return super(Password, self).validate(value)
 
 Password.validate = validate
