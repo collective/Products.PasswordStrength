@@ -34,6 +34,14 @@ from patch import wrapAllMethods
 from Products.CMFPlone.RegistrationTool import RegistrationTool
 import hashlib
 import random
+import pkg_resources
+try:
+    pkg_resources.get_distribution('plone.app.users')
+    from plone.app.users.browser.personalpreferences import IPasswordSchema
+except pkg_resources.DistributionNotFound:
+    from zope.interface import Interface
+    class IPasswordSchema(Interface):
+        pass
 
 log = logging.getLogger('PasswordStrength')
 
@@ -252,7 +260,12 @@ def validate(self, value):
         # Allow the UNCHANGED_PASSWORD value, if a password is set already
         return
 
-    reg_tool = getToolByName(self.context, 'portal_registration')
+    if IPasswordSchema.providedBy(self.context):
+        context = self.context.context
+    else:
+        context = self.context
+    reg_tool = getToolByName(context, 'portal_registration')
+
     errors = reg_tool.testPasswordValidity(value)
     if errors:
         raise CustomPasswordError(errors)
