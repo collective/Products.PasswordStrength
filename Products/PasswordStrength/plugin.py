@@ -260,15 +260,20 @@ def validate(self, value):
         # Allow the UNCHANGED_PASSWORD value, if a password is set already
         return
 
+    skip = False
     if IPasswordSchema.providedBy(self.context):
+        # We need to get the context's context
         context = self.context.context
+        # Do not validate existing passwords
+        if getattr(self, '__name__', '') == 'current_password':
+            skip = True
     else:
         context = self.context
-    reg_tool = getToolByName(context, 'portal_registration')
-
-    errors = reg_tool.testPasswordValidity(value)
-    if errors:
-        raise CustomPasswordError(errors)
+    if not skip:
+        reg_tool = getToolByName(context, 'portal_registration')
+        errors = reg_tool.testPasswordValidity(value)
+        if errors:
+            raise CustomPasswordError(errors)
 
     return super(Password, self).validate(value)
 
