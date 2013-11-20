@@ -1,11 +1,12 @@
 Changes
 -------
 
-0.4 (unreleased)
-================
+0.3.1 (2013-11-20)
+==================
 
-- Nothing changed yet.
-
+- Bugfix for use inside change-password
+- Don't validate password strength of old password
+  (pysailor)
 
 0.3 (2013-08-18)
 ================
