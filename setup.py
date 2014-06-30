@@ -41,6 +41,14 @@ setup(name='Products.PasswordStrength',
           # -*- Extra requirements: -*-
           # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
       ],
+      extras_require={
+          'test': [
+              'plone.app.testing',
+              'plone.browserlayer',
+              'unittest2',
+              'plone.app.robotframework',
+          ],
+      },
       entry_points="""
       [z3c.autoinclude.plugin]
       target = plone
