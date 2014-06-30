@@ -5,6 +5,7 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 
+from Products.CMFPlone.tests.robot.robot_setup import CMFPloneRemoteKeywords
 from plone.testing import z2
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 
@@ -33,6 +34,9 @@ FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE,),
     name='Products.PasswordStrength:Functional',
 )
+
+# Add interesting existing class to default libraries
+REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases = REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases + (CMFPloneRemoteKeywords,)
 
 ROBOT_TESTING = FunctionalTesting(
     bases=(
