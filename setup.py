@@ -47,6 +47,7 @@ setup(name='Products.PasswordStrength',
               'plone.browserlayer',
               'unittest2',
               'plone.app.robotframework',
+              'robotsuite',
           ],
       },
       entry_points="""
