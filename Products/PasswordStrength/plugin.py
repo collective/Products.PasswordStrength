@@ -11,6 +11,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.Cache import Cacheable
 
+from Products.CMFPlone.RegistrationTool import RegistrationTool
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
 from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
@@ -36,38 +37,19 @@ PLUGIN_ID = 'password_strength_plugin'
 PLUGIN_TITLE = 'Create your own rules for enforcing password strength'
 
 
-class RegistrationToolPatch:
-    def testPasswordValidity(self, password, confirm=None):
+# Monkey patch of registration tool to avoid skipping validation for manager
+def testPasswordValidity(self, password, confirm=None):
+    err = self.pasValidation('password', password)
+    if err:
+        return err
 
-        """ Verify that the password satisfies the portal's requirements.
+    if confirm is not None and confirm != password:
+        return _(u'Your password and confirmation did not match. '
+                 u'Please try again.')
 
-        o If the password is valid, return None.
-        o If not, return a string explaining why.
-        """
-        if confirm is not None and confirm != password:
-            return ('Your password and confirmation did not match. '
-                    'Please try again.')
+    return None
 
-        if not password:
-            err = ['You must enter a password.']
-        else:
-            err = []
-
-        # Use PAS to test validity
-        pas_instance = self.acl_users
-        plugins = pas_instance._getOb('plugins')
-        validators = plugins.listPlugins(IValidationPlugin)
-        for validator_id, validator in validators:
-            user = None
-            set_id = ''
-            set_info = {'password': password}
-            errors = validator.validateUserInfo(user, set_id, set_info)
-            err += [info['error'] for info in errors if info['id'] == 'password']
-        if err:
-            return ' '.join(err)
-        else:
-            return None
-
+RegistrationTool.testPasswordValidity = testPasswordValidity
 
 manage_addPasswordStrengthForm = PageTemplateFile(
     'www/passwordStrengthAdd',
@@ -81,8 +63,7 @@ def manage_addPasswordStrength(dispatcher,
                                REQUEST=None):
     """Add a PasswordStrength plugin to a Pluggable Auth Service."""
 
-    obj = PasswordStrength(id, title
-                           )
+    obj = PasswordStrength(id, title)
     dispatcher._setObject(obj.getId(), obj)
 
     if REQUEST is not None:
@@ -189,7 +170,6 @@ class PasswordStrength(BasePlugin, Cacheable):
 
         if set_info and set_info.get('password', None) is not None:
             password = set_info['password']
-
             i = 1
             while True:
                 reg = getattr(self, 'p%i_re' % i, None)
