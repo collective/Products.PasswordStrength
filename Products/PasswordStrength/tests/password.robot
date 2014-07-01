@@ -26,10 +26,11 @@ Test register form
     Element Should Contain  css=#formfield-form-password_ctl .fieldErrorBox  This password doesn't match requirements for passwords
     # Accepts well formed password
     Input text  name=form.password  ABCDEFGHIJabcdefghij1!
-    Click element  css=#formfield-form-password_ctl
-    Element should not be visible  css=#formfield-form-password .fieldErrorBox
-    # Fill form
     Input text  name=form.password_ctl  ABCDEFGHIJabcdefghij1!
+    Click element  css=#formfield-form-email
+    Element should not be visible  css=#formfield-form-password .fieldErrorBox
+    Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
+    # Fill form
     Input text  name=form.username  rocky
     Input text  name=form.email  rocky@balboa.com
     Click button  id=form.actions.register
@@ -51,10 +52,11 @@ Test new user form
     Element Should Contain  css=#formfield-form-password_ctl .fieldErrorBox  This password doesn't match requirements for passwords
     # Accepts well formed password
     Input text  name=form.password  ABCDEFGHIJabcdefghij1!
-    Click element  css=#formfield-form-password_ctl
-    Element should not be visible  css=#formfield-form-password .fieldErrorBox
-    # Fill form
     Input text  name=form.password_ctl  ABCDEFGHIJabcdefghij1!
+    Click element  css=#formfield-form-email
+    Element should not be visible  css=#formfield-form-password .fieldErrorBox
+    Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
+    # Fill form
     Input text  name=form.username  rocky
     Input text  name=form.email  rocky@balboa.com
     Click button  id=form.actions.register
