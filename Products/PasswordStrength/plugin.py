@@ -191,7 +191,8 @@ class PasswordStrength(BasePlugin, Cacheable):
                     break
                 if not re.match(reg, password):
                     err = getattr(self, 'p%i_err' % i, None)
-                    errors += [err]
+                    if err:
+                        errors += [err.decode('utf8')]
                 i += 1
 
             errors = [{'id': 'password', 'error': e} for e in errors]
