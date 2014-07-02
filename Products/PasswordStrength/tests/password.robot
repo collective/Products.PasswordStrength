@@ -87,6 +87,20 @@ Test change password form
     Element should be visible  jquery=dl.portalMessage dd:contains('Password changed')
     Log out
 
+Test register form without password
+    Own passwords registration disabled
+    Go to  ${PLONE_URL}/@@register
+    # Contains password description ?
+    Element should not be visible  css=#formfield-form-password
+    # Fill form
+    Input text  name=form.username  rocky
+    Input text  name=form.email  rocky@balboa.com
+    Click button  id=form.actions.register
+    # Redirected
+    Element should contain  css=h1.documentFirstHeading  Welcome
+    ${message} =  Get The Last Sent Email
+    Should contain  ${message}  Your user account has been created
+
 *** Keywords ***
 Test Setup
     Open SauceLabs test browser

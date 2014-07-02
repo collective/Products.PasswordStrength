@@ -36,9 +36,22 @@ PROJECTNAME = 'PasswordStrength'
 PLUGIN_ID = 'password_strength_plugin'
 PLUGIN_TITLE = 'Create your own rules for enforcing password strength'
 
+RegistrationTool.origGeneratePassword = RegistrationTool.generatePassword
 
-# Monkey patch of registration tool to avoid skipping validation for manager
+
+# Monkey patch of registration tool method to mark generated password
+# Don't think it decreases security... ?
+def generatePassword(self):
+    return "G-%s" % self.origGeneratePassword()
+
+RegistrationTool.generatePassword = generatePassword
+
+
+# Monkey patch of registration tool method to avoid skipping validation for manager
 def testPasswordValidity(self, password, confirm=None):
+    # We escape the test if it looks like a generated password
+    if password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
+        return None
     err = self.pasValidation('password', password)
     if err:
         return err
@@ -50,6 +63,7 @@ def testPasswordValidity(self, password, confirm=None):
     return None
 
 RegistrationTool.testPasswordValidity = testPasswordValidity
+
 
 manage_addPasswordStrengthForm = PageTemplateFile(
     'www/passwordStrengthAdd',

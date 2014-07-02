@@ -8,6 +8,7 @@ from plone.app.testing import PloneSandboxLayer
 from Products.CMFPlone.tests.robot.robot_setup import CMFPloneRemoteKeywords
 from plone.testing import z2
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
+from plone.app.robotframework.testing import MOCK_MAILHOST_FIXTURE
 
 
 class Fixture(PloneSandboxLayer):
@@ -41,6 +42,7 @@ REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases = REMOTE_LIBRARY_BUNDLE_FIXTURE.libra
 ROBOT_TESTING = FunctionalTesting(
     bases=(
         FIXTURE,
+        MOCK_MAILHOST_FIXTURE,
         REMOTE_LIBRARY_BUNDLE_FIXTURE,
         z2.ZSERVER_FIXTURE,
     ),
