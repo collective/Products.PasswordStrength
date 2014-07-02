@@ -85,11 +85,11 @@ def manage_addPasswordStrength(dispatcher,
                                      'PasswordStrength+plugin+added.'
                                      % dispatcher.absolute_url())
 
-DEFUALT_POLICIES = [(r'.{20}.*', 'Minimum 20 characters.'),
-                    (r'.*[A-Z].*', 'Minimum 1 capital letter.'),
-                    (r'.*[a-z].*', 'Minimum 1 lower case letter.'),
-                    (r'.*[0-9].*', 'Minimum 1 number.'),
-                    (r'.*[^0-9a-zA-Z ].*', 'Minimum 1 non-alpha character.'),
+DEFUALT_POLICIES = [(r'.{20}.*', 'Minimum 20 characters'),
+                    (r'.*[A-Z].*', 'Minimum 1 capital letter'),
+                    (r'.*[a-z].*', 'Minimum 1 lower case letter'),
+                    (r'.*[0-9].*', 'Minimum 1 number'),
+                    (r'.*[^0-9a-zA-Z ].*', 'Minimum 1 non-alpha character'),
                     ]
 
 
