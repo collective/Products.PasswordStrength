@@ -8,10 +8,10 @@ def read(*rnames):
 
 setup(name='Products.PasswordStrength',
       version=version,
-      description="This Pluggable Authentication Service (PAS) plugin will lock a \
-                   login after a predetermined number of incorrect attempts. Once \
-                   locked, the user will be shown a page that tells them to contact \
-                   their administrator to unlock.",
+      description="This Pluggable Authentication Service (PAS) plugin adds a password policy "
+                  "giving the possibility to define up to 5 regular expressions to validate "
+                  "a password. Default constrains are length, capital and lower letters, "
+                  "number and special characters.",
       long_description=(
         read('README.txt')
         + '\n\n' +
@@ -20,8 +20,7 @@ setup(name='Products.PasswordStrength',
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Framework :: Zope2",
-        "Framework :: Plone :: 4.1",
-        "Framework :: Plone :: 4.2",
+        "Framework :: Plone :: 4.3",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",

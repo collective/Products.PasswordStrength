@@ -4,7 +4,10 @@ Changes
 0.3.2 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Added buildout and robot tests [sgeulette]
+- Dont't skip password validation for manager [sgeulette]
+- Skip password validation for generated password [sgeulette]
+- Added french translation. Corrected UnicodeDecodeError. [sgeulette]
 
 
 0.3.1 (2013-11-20)

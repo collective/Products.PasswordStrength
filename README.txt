@@ -12,7 +12,7 @@ Requires:
 
  - (optional) PlonePAS and its dependencies
  
- - Plone 4.1 or 4.2.
+ - Plone 4.3.
 
 
 Installation
@@ -31,28 +31,24 @@ Installation
 
   That's it! Test it out.
 
-  Note: PasswordStength doesn't currently generate new passwords. This means that
-  you will need to change Plones security settings such that users manually enter
-  passwords rather than autogenerate them.
-
-
 Implementation
 
   A PAS plugin for Validation checks the password against each regular
   expression listed in the properties. Any rules that fail result in
   the associated error messages being returned.
   
-  Plone doesn't use PAS to validate passwords so included is a patch to
-  Products.CMFPlone.RegistrationTool.RegistrationTool.testPasswordValidity
-  which makes plone use PAS validation plugins.
+  Included is a patch to Products.CMFPlone.RegistrationTool.RegistrationTool.testPasswordValidity.
 
 TODO
 
-  1. Do password generation from regexp. This looks possible
-     http://stackoverflow.com/questions/492716/reversing-a-regular-expression-in-python
-
-  2. Do password expiration
-
+  1. Patch or modify login_password.cpt to display directly the password constrains
+     (<div class="formHelp" i18n:translate="" tal:define="constrains python:context.portal_registration.testPasswordValidity('');">
+      Enter your new password. <span i18n:name="errors" tal:replace="constrains"/>
+      </div>)
+  
+  2. Patch or modify passwordreset view to display directly the password constrains
+  
+  3. Do password expiration
 
 
 Copyright, License, Author
