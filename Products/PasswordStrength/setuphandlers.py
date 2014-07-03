@@ -33,7 +33,7 @@ def install(portal):
     if PLUGIN_ID not in existing:
         plugin = plone_pas.manage_addProduct[PROJECTNAME]
         plugin.manage_addPasswordStrength(PLUGIN_ID, PLUGIN_TITLE)
-        activatePluginSelectedInterfaces(plone_pas, PLUGIN_ID, out, 'IValidationPlugin')
+    activatePluginSelectedInterfaces(plone_pas, PLUGIN_ID, out, 'IValidationPlugin')
     activated = plone_pas.plugins.getAllPlugins(plugin_type='IValidationPlugin')['active']
     if PLUGIN_ID in activated and PLONE_POLICY in activated:
         activatePluginSelectedInterfaces(plone_pas, PLONE_POLICY, out, 'IValidationPlugin',
