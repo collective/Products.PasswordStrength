@@ -15,6 +15,6 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
 
-#: ./plugin.py:216
+#: ./plugin.py:218
 msgid "This password doesn't match requirements for passwords"
 msgstr ""

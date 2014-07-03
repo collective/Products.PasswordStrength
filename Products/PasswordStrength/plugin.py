@@ -12,11 +12,13 @@ from Globals import InitializeClass
 from OFS.Cache import Cacheable
 
 from Products.CMFPlone.RegistrationTool import RegistrationTool
+from Products.CMFPlone import PloneMessageFactory as _
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
 from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
-
 import re
+from zope.i18n import translate
+from plone.api import portal
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import pkg_resources
@@ -85,7 +87,7 @@ def manage_addPasswordStrength(dispatcher,
                                      'PasswordStrength+plugin+added.'
                                      % dispatcher.absolute_url())
 
-DEFUALT_POLICIES = [(r'.{10}.*', 'Minimum 10 characters'),
+DEFAULT_POLICIES = [(r'.{10}.*', 'Minimum 10 characters'),
                     (r'.*[A-Z].*', 'Minimum 1 capital letter'),
                     (r'.*[a-z].*', 'Minimum 1 lower case letter'),
                     (r'.*[0-9].*', 'Minimum 1 number'),
@@ -161,11 +163,13 @@ class PasswordStrength(BasePlugin, Cacheable):
     def __init__(self, id, title=None):
         self._id = self.id = id
         self.title = title
+        self.portal = portal.getSite()
 
         i = 1
-        for reg, err in DEFUALT_POLICIES:
+        for reg, err in DEFAULT_POLICIES:
             setattr(self, 'p%i_re' % i, reg)
-            setattr(self, 'p%i_err' % i, err)
+            setattr(self, 'p%i_err' % i, translate(err, domain='Products.PasswordStrength',
+                                                   context=self.portal.REQUEST).encode('utf8'))
             i += 1
 
     security.declarePrivate('validateUserInfo')
@@ -210,7 +214,6 @@ InitializeClass(PasswordStrength)
 from zope.schema import Password
 from zope.schema.interfaces import ValidationError
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
 
 
 class CustomPasswordError(ValidationError):

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Products.PasswordStrength\n"
 "POT-Creation-Date: 2014-07-02 13:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Stephan Geulette <support@imio.be>\n"
@@ -12,10 +12,10 @@ msgstr ""
 "Language-Code: fr\n"
 "Language-Name: French\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: fr\n"
+"Domain: plone\n"
 "X-is-fallback-for: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
-#: ./plugin.py:216
+#: ./plugin.py:218
 msgid "This password doesn't match requirements for passwords"
 msgstr "Ce mot de passe ne respecte pas les contraintes indiquées"
 
