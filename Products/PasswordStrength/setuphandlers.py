@@ -1,6 +1,7 @@
 from StringIO import StringIO
 from Products.CMFCore.utils import getToolByName
 from Products.PasswordStrength.plugin import PROJECTNAME, PLUGIN_ID, PLUGIN_TITLE
+PLONE_POLICY = 'password_policy'
 
 
 def setupPasswordStrength(context):
@@ -28,16 +29,15 @@ def install(portal):
 
     plone_pas = getToolByName(portal, 'acl_users')
 
-    # define the interfaces which need to be activated for either PAS
-    interfaces_for_paservices = {
-        plone_pas: ['IValidationPlugin'],
-    }
-    for (pas, interfaces) in interfaces_for_paservices.iteritems():
-        existing = pas.objectIds()
-        if PLUGIN_ID not in existing:
-            plugin = pas.manage_addProduct[PROJECTNAME]
-            plugin.manage_addPasswordStrength(PLUGIN_ID, PLUGIN_TITLE)
-            activatePluginSelectedInterfaces(pas, PLUGIN_ID, out, interfaces)
+    existing = plone_pas.objectIds()
+    if PLUGIN_ID not in existing:
+        plugin = plone_pas.manage_addProduct[PROJECTNAME]
+        plugin.manage_addPasswordStrength(PLUGIN_ID, PLUGIN_TITLE)
+        activatePluginSelectedInterfaces(plone_pas, PLUGIN_ID, out, 'IValidationPlugin')
+    activated = plone_pas.plugins.getAllPlugins(plugin_type='IValidationPlugin')['active']
+    if PLUGIN_ID in activated and PLONE_POLICY in activated:
+        activatePluginSelectedInterfaces(plone_pas, PLONE_POLICY, out, 'IValidationPlugin',
+                                         disable=['IValidationPlugin'])
 
     print >> out, "Successfully installed %s." % PROJECTNAME
     return out.getvalue()
@@ -47,10 +47,13 @@ def uninstall(portal):
     out = StringIO()
     print >> out, "Uninstalling %s:" % PROJECTNAME
     plone_pas = getToolByName(portal, 'acl_users')
-    for pas in [plone_pas]:
-        existing = pas.objectIds()
-        if PLUGIN_ID in existing:
-            pas.manage_delObjects(PLUGIN_ID)
+    existing = plone_pas.objectIds()
+    if PLUGIN_ID in existing:
+#        plone_pas.manage_delObjects(PLUGIN_ID)
+        activatePluginSelectedInterfaces(plone_pas, PLUGIN_ID, out, 'IValidationPlugin',
+                                         disable=['IValidationPlugin'])
+    if PLONE_POLICY in existing:
+        activatePluginSelectedInterfaces(plone_pas, PLONE_POLICY, out, 'IValidationPlugin')
 
 
 def activatePluginSelectedInterfaces(pas, plugin, out, selected_interfaces, disable=[]):
