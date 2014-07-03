@@ -49,7 +49,7 @@ RegistrationTool.generatePassword = generatePassword
 
 # Monkey patch of registration tool method to avoid skipping validation for manager
 def testPasswordValidity(self, password, confirm=None):
-    # We escape the test if it looks like a generated password
+    # We escape the test if it looks like a generated password (with default length of 56 chars)
     if password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
         return None
     err = self.pasValidation('password', password)
