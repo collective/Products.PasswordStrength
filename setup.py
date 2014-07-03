@@ -42,11 +42,11 @@ setup(name='Products.PasswordStrength',
       ],
       extras_require={
           'test': [
+              'plone.app.robotframework',
               'plone.app.testing',
               'plone.browserlayer',
-              'unittest2',
-              'plone.app.robotframework',
               'robotsuite',
+              'unittest2',
           ],
       },
       entry_points="""
