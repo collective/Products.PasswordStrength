@@ -11,12 +11,14 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- don't display this profile on site creation page -->
   <genericsetup:registerProfile
       name="uninstall"
       title="PasswordStrength Uninstall"
       directory="profiles/uninstall"
       description='Uninstall profile for the "PasswordStrength" Plone theme.'
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       />
 
 </configure>
