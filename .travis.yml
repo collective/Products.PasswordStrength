@@ -11,9 +11,3 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 script:
   bin/test
-notifications:
-  email:
-    recipients:
-      - devs@imio.be
-    on_success: change
-    on_failure: change
