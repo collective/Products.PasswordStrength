@@ -54,8 +54,7 @@ TODO
 
 1. Patch or modify login_password.cpt to display directly the password constrains
    (<div class="formHelp" i18n:translate="" tal:define="constrains python:context.portal_registration.testPasswordValidity('');">
-    Enter your new password. <span i18n:name="errors" tal:replace="constrains"/>
-    </div>)
+   Enter your new password. <span i18n:name="errors" tal:replace="constrains"/></div>)
 
 2. Patch or modify passwordreset view to display directly the password constrains
 
