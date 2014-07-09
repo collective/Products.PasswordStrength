@@ -14,8 +14,8 @@ Tests
 
 This package is tested using Travis CI. The current status is :
 
-.. image:: https://travis-ci.org/IMIO/Products.PasswordStrength.png
-    :target: http://travis-ci.org/IMIO/Products.PasswordStrength
+.. image:: https://travis-ci.org/collective/Products.PasswordStrength.png
+    :target: http://travis-ci.org/collective/Products.PasswordStrength
 
 Requires
 ========
