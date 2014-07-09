@@ -13,9 +13,9 @@ setup(name='Products.PasswordStrength',
                   "a password. Default constrains are length, capital and lower letters, "
                   "number and special characters.",
       long_description=(
-        read('README.txt')
+        read('README.rst')
         + '\n\n' +
-        read('CHANGES.txt')
+        read('CHANGES.rst')
         ),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
