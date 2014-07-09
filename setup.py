@@ -37,6 +37,7 @@ setup(name='Products.PasswordStrength',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.api',
           # -*- Extra requirements: -*-
           # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
       ],
