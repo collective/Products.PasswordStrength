@@ -21,15 +21,7 @@ from zope.i18n import translate
 from plone.api import portal
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import pkg_resources
-try:
-    pkg_resources.get_distribution('plone.app.users')
-    from plone.app.users.browser.personalpreferences import IPasswordSchema
-except pkg_resources.DistributionNotFound:
-    from zope.interface import Interface
-
-    class IPasswordSchema(Interface):
-        pass
+from plone.app.users.browser.personalpreferences import IPasswordSchema
 
 log = logging.getLogger('PasswordStrength')
 
