@@ -12,7 +12,8 @@ from Globals import InitializeClass
 from OFS.Cache import Cacheable
 
 from Products.CMFPlone.RegistrationTool import RegistrationTool
-from Products.CMFPlone import PloneMessageFactory as _
+from Products.CMFPlone import PloneMessageFactory as _p
+from . import  _
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
 from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
@@ -51,8 +52,8 @@ def testPasswordValidity(self, password, confirm=None):
         return err
 
     if confirm is not None and confirm != password:
-        return _(u'Your password and confirmation did not match. '
-                 u'Please try again.')
+        return _p(u'Your password and confirmation did not match. '
+                  u'Please try again.')
 
     return None
 
