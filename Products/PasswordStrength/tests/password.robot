@@ -68,7 +68,8 @@ Test new user form
 Test change password form
     Log in  test-user  secret
     Go to  ${PLONE_URL}/@@change-password
-    Element should contain  css=h1.documentFirstHeading  Reset Password
+    #Element should contain  css=h1.documentFirstHeading  Reset Password
+    Element should contain  css=div.documentDescription  Change Password
     # Contains password description ?
     Element should be visible  jquery=div.formHelp:contains('Minimum 1 capital letter.')
     # Reacts with bad password
