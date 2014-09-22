@@ -1,0 +1,10 @@
+include *.txt
+recursive-include Extensions *.py
+recursive-include Products *.cpt
+recursive-include Products *.metadata
+recursive-include Products *.pt
+recursive-include Products *.txt
+recursive-include Products *.vpy
+recursive-include Products *.xml
+recursive-include Products *.zcml
+recursive-include Products *.zpt

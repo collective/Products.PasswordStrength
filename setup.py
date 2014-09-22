@@ -1,26 +1,29 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.2'
+version = '0.3.2.dev0'
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 setup(name='Products.PasswordStrength',
       version=version,
-      description="This Pluggable Authentication Service (PAS) plugin will lock a \
-                   login after a predetermined number of incorrect attempts. Once \
-                   locked, the user will be shown a page that tells them to contact \
-                   their administrator to unlock.",
+      description="This Pluggable Authentication Service (PAS) plugin adds a password policy "
+                  "giving the possibility to define up to 5 regular expressions to validate "
+                  "a password. Default constrains are length, capital and lower letters, "
+                  "number and special characters.",
       long_description=(
-        read('README.txt')
+        read('README.rst')
         + '\n\n' +
-        read('CHANGES.txt')
+        read('CHANGES.rst')
         ),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Framework :: Zope2",
+        "Framework :: Plone :: 4.3",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='zope PAS',
@@ -34,9 +37,19 @@ setup(name='Products.PasswordStrength',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.api',
           # -*- Extra requirements: -*-
           # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
       ],
+      extras_require={
+          'test': [
+              'plone.app.robotframework',
+              'plone.app.testing',
+              'plone.browserlayer',
+              'robotsuite',
+              'unittest2',
+          ],
+      },
       entry_points="""
       [z3c.autoinclude.plugin]
       target = plone
