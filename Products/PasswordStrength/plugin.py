@@ -42,13 +42,15 @@ except pkg_resources.DistributionNotFound:
     from zope.interface import Interface
     class IPasswordSchema(Interface):
         pass
+from zope.i18nmessageid import MessageFactory
 
+_ = MessageFactory('PasswordStrength')
 log = logging.getLogger('PasswordStrength')
 
 
 PROJECTNAME = 'PasswordStrength'
 PLUGIN_ID = 'password_strength_plugin'
-PLUGIN_TITLE = 'Create your own rules for enforcing password strength'
+PLUGIN_TITLE = _(u'Create your own rules for enforcing password strength')
 
 
 
@@ -63,11 +65,11 @@ class RegistrationToolPatch:
         o If not, return a string explaining why.
         """
         if confirm is not None and confirm != password:
-            return ( 'Your password and confirmation did not match. '
-                   + 'Please try again.' )
+            return ( _(u'Your password and confirmation did not match. '
+                   + 'Please try again.') )
 
         if not password:
-            err = [ 'You must enter a password.' ]
+            err = [ _(u'You must enter a password.') ]
         else:
             err = []
 
