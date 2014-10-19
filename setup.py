@@ -13,7 +13,7 @@ setup(name='Products.PasswordStrength',
                    locked, the user will be shown a page that tells them to contact \
                    their administrator to unlock.",
       long_description=(
-        read('README.txt')
+        read('README.rst')
         + '\n\n' +
         read('CHANGES.txt')
         ),
