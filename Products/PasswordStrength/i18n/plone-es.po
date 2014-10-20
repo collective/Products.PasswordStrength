@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone CMS\n"
-"POT-Creation-Date: 2014-10-19 04:26+0000\n"
+"POT-Creation-Date: 2014-10-20 02:23+0000\n"
 "PO-Revision-Date: 2014-10-18 23:58-0430\n"
 "Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
 "Language-Team: ES <LL@li.org>\n"
@@ -21,40 +21,15 @@ msgstr ""
 "Domain: plone\n"
 "Language-code: es\n"
 "Language-name: Spanish\n"
-"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-"
-"gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
 #: ./plugin.py:53
 msgid "Create your own rules for enforcing password strength"
 msgstr "Cree su propia regla para forzar al uso de contraseñas fuertes"
 
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:17
-msgid "Passwords do not match."
-msgstr "Las contraseñas no coinciden."
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:19
-msgid "Passwords must contain at least 5 letters."
-msgstr "Las contraseñas deben de contener al menos 5 caracteres."
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:54
-msgid "Please correct the indicated errors."
-msgstr "Por favor, corrija los errores indicados."
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:50
-msgid "The login name you selected is already in use or is not valid. Please choose another."
-msgstr "El nombre de inicio de sesión que ha elegido ya está en uso o no es válido. Por favor, elija otro."
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:15
-msgid "This field is required, please provide some information."
-msgstr "Este campo es requerido, por favor, provea alguna información."
-
 #: ./plugin.py:254
 msgid "This password doesn't match requirements for passwords"
 msgstr "Esta contraseña no coinciden con los requerimientos para contraseñas"
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:21
-msgid "This username is reserved. Please choose a different name."
-msgstr "Este nombre de usuario está reservado. Por favor, escoja un nombre distinto."
 
 #: ./plugin.py:72
 msgid "You must enter a password."
@@ -226,3 +201,4 @@ msgstr "Este sitio no tiene establecida la configuración de correo electrónico
 #: ./skins/PasswordStrength_public/join_form.cpt:92
 msgid "title_required"
 msgstr "Requerido"
+

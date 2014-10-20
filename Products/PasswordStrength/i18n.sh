@@ -6,7 +6,7 @@ i18ndude rebuild-pot --pot ./i18n/${DOMAIN}.pot --merge ./i18n/manual.pot --crea
 i18ndude sync --pot ./i18n/${DOMAIN}.pot ./i18n/${DOMAIN}-*.po
 
 i18ndude rebuild-pot --pot ./i18n/plone.pot --create plone . || exit 1
-i18ndude sync --pot ./i18n/plone.pot ./i18n/plone.po
+i18ndude sync --pot ./i18n/plone.pot ./i18n/plone-*.po
 
 WARNINGS=`find . -name "*pt" | xargs i18ndude find-untranslated | grep -e '^-WARN' | wc -l`
 ERRORS=`find . -name "*pt" | xargs i18ndude find-untranslated | grep -e '^-ERROR' | wc -l`
