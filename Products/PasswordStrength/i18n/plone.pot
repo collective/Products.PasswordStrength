@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-10-19 04:26+0000\n"
+"POT-Creation-Date: 2014-10-20 02:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,32 +21,8 @@ msgstr ""
 msgid "Create your own rules for enforcing password strength"
 msgstr ""
 
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:17
-msgid "Passwords do not match."
-msgstr ""
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:19
-msgid "Passwords must contain at least 5 letters."
-msgstr ""
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:54
-msgid "Please correct the indicated errors."
-msgstr ""
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:50
-msgid "The login name you selected is already in use or is not valid. Please choose another."
-msgstr ""
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:15
-msgid "This field is required, please provide some information."
-msgstr ""
-
 #: ./plugin.py:254
 msgid "This password doesn't match requirements for passwords"
-msgstr ""
-
-#: ./skins/PasswordStrength_public/join_form_validate.vpy:21
-msgid "This username is reserved. Please choose a different name."
 msgstr ""
 
 #: ./plugin.py:72
