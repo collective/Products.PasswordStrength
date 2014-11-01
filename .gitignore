@@ -3,12 +3,16 @@
 *.egg
 *.EGG
 *.EGG-INFO
+*.html
+*.xml
 bin
 build
 develop-eggs
 downloads
 eggs
 fake-eggs
+include
+lib
 parts
 dist
 var
