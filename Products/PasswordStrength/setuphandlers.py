@@ -1,7 +1,10 @@
+import logging
+from smtplib import SMTPException
 from StringIO import StringIO
 from Products.CMFCore.utils import getToolByName
 from Products.PasswordStrength.plugin import PROJECTNAME, PLUGIN_ID, PLUGIN_TITLE
 PLONE_POLICY = 'password_policy'
+logger = logging.getLogger('Products.PasswordStrength: setuphandlers')
 
 
 def setupPasswordStrength(context):
@@ -78,3 +81,34 @@ def activatePluginSelectedInterfaces(pas, plugin, out, selected_interfaces, disa
                 print >> out, " - Activating: " + info['title']
     plugin_obj.manage_activateInterfaces(activatable)
     print >> out, plugin + " activated."
+
+
+def list_append(lst, elem):
+    """
+        Append in a list and return the appended element
+    """
+    lst.append(elem)
+    return elem
+
+
+def reset_passwords(context):
+    """
+        Reset all users passwords
+    """
+    if context.readDataFile('passwordstrength_reset.txt') is None:
+        return
+    portal = context.getSite()
+    regtool = portal.portal_registration
+    logs = []
+    logger.info(list_append(logs, "Resetting all users passwords"))
+    for user in portal.portal_membership.listMembers():
+        pw = regtool.generatePassword()
+        user.setSecurityProfile(password=pw)
+        # copy from plone.app.controlpanel.usergroups.py
+        immediate = not portal.MailHost.smtp_queue
+        try:
+            regtool.mailPassword(user.id, portal.REQUEST, immediate=immediate)
+        except SMTPException as e:
+            logger.exception(list_append(logs, str(e)))
+    logger.info(list_append(logs, "Reset done"))
+    return '\n'.join(logs)

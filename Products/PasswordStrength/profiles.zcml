@@ -21,4 +21,13 @@
       for="Products.CMFCore.interfaces.ISiteRoot"
       />
 
+  <genericsetup:registerProfile
+      name="reset"
+      title="PasswordStrength All users passwords reset"
+      directory="profiles/reset"
+      description='Users passwords reset.'
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      />
+
 </configure>
