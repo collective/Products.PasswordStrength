@@ -69,8 +69,6 @@ Test change password form
     Log in  test-user  secret
     Go to  ${PLONE_URL}/@@change-password
     # Element should contain  css=h1.documentFirstHeading  Reset Password
-    # use xpath locator to bypass strange travis error... 
-    Element should contain  xpath=//h1[@class='documentFirstHeading']  Reset Password
     # Element should contain  css=#content .documentDescription  Change Password
     # Contains password description ?
     Element should be visible  jquery=div.formHelp:contains('Minimum 1 capital letter.')
