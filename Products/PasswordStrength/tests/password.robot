@@ -22,7 +22,7 @@ Test register form
     # Reacts with bad password
     Input text  name=form.password  12345
     Input text  name=form.password_ctl  12345
-    Click element  css=#formfield-form-password_ctl
+    Click button  id=form.actions.register
     Element should be visible  css=#formfield-form-password .fieldErrorBox
     Element should contain  css=#formfield-form-password .fieldErrorBox  This password doesn't match requirements for passwords
     Element should be visible  css=#formfield-form-password_ctl .fieldErrorBox
@@ -30,10 +30,9 @@ Test register form
     # Accepts well formed password
     Input text  name=form.password  ABCDEFGHIJabcdefghij1!
     Input text  name=form.password_ctl  ABCDEFGHIJabcdefghij1!
-    Click element  css=#formfield-form-email
+    Click button  id=form.actions.register
     Element should not be visible  css=#formfield-form-password .fieldErrorBox
     Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
-    Click button  id=form.actions.register
     # Redirected
     Element should contain  css=h1.documentFirstHeading  Welcome
 
@@ -48,7 +47,7 @@ Test new user form
     # Reacts with bad password
     Input text  name=form.password  12345
     Input text  name=form.password_ctl  12345
-    Click element  css=#formfield-form-password_ctl
+    Click button  id=form.actions.register
     Element should be visible  css=#formfield-form-password .fieldErrorBox
     Element should contain  css=#formfield-form-password .fieldErrorBox  This password doesn't match requirements for passwords
     Element should be visible  css=#formfield-form-password_ctl .fieldErrorBox
@@ -56,10 +55,9 @@ Test new user form
     # Accepts well formed password
     Input text  name=form.password  ABCDEFGHIJabcdefghij1!
     Input text  name=form.password_ctl  ABCDEFGHIJabcdefghij1!
-    Click element  css=#formfield-form-email
+    Click button  id=form.actions.register
     Element should not be visible  css=#formfield-form-password .fieldErrorBox
     Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
-    Click button  id=form.actions.register
     # Redirected
     Element should contain  css=h1.documentFirstHeading  Users Overview
     Page should contain element  css=input[value="rocky"]
@@ -89,6 +87,7 @@ Test change password form
     Log out
 
 Test register form without password
+    ${plone_version} =  Get plone version
     Own passwords registration disabled
     Go to  ${PLONE_URL}/@@register
     # Contains password description ?
@@ -98,6 +97,8 @@ Test register form without password
     Input text  name=form.email  rocky@balboa.com
     Click button  id=form.actions.register
     # Redirected
+    # Run keyword if  '${plone_version}' >= '4.3'
+    Wait until page contains  Welcome  5
     Element should contain  css=h1.documentFirstHeading  Welcome
     ${message} =  Get The Last Sent Email
     Should contain  ${message}  Your user account has been created
@@ -110,5 +111,5 @@ Test Setup
     The self registration enabled
     The mail setup configured
     Own passwords registration enabled
-    The inline validation enabled
+    The inline validation disabled
     Disable autologin
