@@ -1,6 +1,6 @@
 from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _p
+from Products.PasswordStrength import _
 from plone.app.users.browser.register import BaseRegistrationForm
 from plone.app.users.browser.personalpreferences import PasswordAccountPanel
 
@@ -14,10 +14,10 @@ def testPasswordValidity(self, password, confirm=None):
     o If not, return a string explaining why.
     """
     if confirm is not None and confirm != password:
-        return _p('Your password and confirmation did not match. Please try again.')
+        return _('Your password and confirmation did not match. Please try again.')
 
     if not password:
-        err = [_p('You must enter a password.')]
+        err = [_('You must enter a password')]
     else:
         err = []
 

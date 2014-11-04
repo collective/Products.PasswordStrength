@@ -23,8 +23,8 @@ Own passwords registration disabled
 Test change password form
     Log in  test-user  secret
     Go to  ${PLONE_URL}/@@change-password
+    Wait until page contains  Reset Password  5
     # Element should contain  css=h1.documentFirstHeading  Reset Password
-    # Element should contain  css=#content .documentDescription  Change Password
     # Contains password description ?
     Element should contain  css=#content-core form div:nth-of-type(2).field div.formHelp  Minimum 1 capital letter
     # Reacts with bad password
