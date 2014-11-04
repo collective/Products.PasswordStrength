@@ -65,13 +65,13 @@ Test new user form
     Page should contain element  css=input[value="rocky"]
     Disable autologin
 
-Test change password form
+Test change password form with inline validation
     Test change password form
 
-Test register form without password
+Test register form without password with inline validation
     Test register form without password
 
-Test reset form
+Test reset form with inline validation
     Test reset form
 
 *** Keywords ***
@@ -83,4 +83,6 @@ Test Setup
     The mail setup configured
     Own passwords registration enabled
     The inline validation enabled
+    ${plone_version} =  Get plone version
+    Set global variable  ${plone_version}
     Disable autologin

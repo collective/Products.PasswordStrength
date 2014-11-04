@@ -8,6 +8,8 @@ matrix:
   include:
     - python: 2.6
       env: PLONE_VERSION=4.2
+    - python: 2.6
+      env: PLONE_VERSION=4.1
 
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg

@@ -82,5 +82,5 @@ Test Setup
     Own passwords registration enabled
     The inline validation disabled
     ${plone_version} =  Get plone version
-    # Run keyword if  '${plone_version}' >= '4.3'
+    Set global variable  ${plone_version}
     Disable autologin

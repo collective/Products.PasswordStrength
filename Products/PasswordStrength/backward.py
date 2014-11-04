@@ -22,7 +22,7 @@ def testPasswordValidity(self, password, confirm=None):
         err = []
 
     # We escape the test if it looks like a generated password
-    if password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
+    if password and password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
         return None
 
     # Use PAS to test validity

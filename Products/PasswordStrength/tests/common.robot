@@ -22,11 +22,14 @@ Own passwords registration disabled
 
 Test change password form
     Log in  test-user  secret
-    Sleep  5
+    Sleep  2
     Go to  ${PLONE_URL}/@@change-password
     # Element should contain  css=h1.documentFirstHeading  Reset Password
     # Contains password description ?
     Element should contain  css=#content-core form div:nth-of-type(2).field div.formHelp  Minimum 1 capital letter
+    # In Plone 4.1, the current password can't be validated
+    # Products/PlonePAS/gruf_support.py(16)authenticate() : 'test_user_1_' used as login in place of 'test-user'
+    Run keyword if  '${plone_version}' <= '4.1.99'  Pass execution  Stopped this test with Plone < 4.2
     # Reacts with bad password
     Input text  name=form.current_password  secret
     Input text  name=form.new_password  12345
