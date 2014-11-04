@@ -28,7 +28,16 @@ class PasswordStrengthRemoteKeywords(RemoteLibrary):
         return PLONE_VERSION
 
     def extract_reset_url(self, mail):
+        url = ''
         for line in mail.split('\n'):
-            if line.startswith('http:'):
-                return line[line.index('passwordreset'):]
+            line = line.strip()
+            if line.startswith('http'):
+                url = line[line.index('passwordreset'):]
+                if url.endswith('='):
+                    url = url[:-1]
+                    continue
+                else:
+                    return url
+            elif url:
+                return url + line
         return ''

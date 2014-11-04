@@ -24,7 +24,6 @@ Test change password form
     Log in  test-user  secret
     Sleep  5
     Go to  ${PLONE_URL}/@@change-password
-    Wait until page contains  Reset Password  5
     # Element should contain  css=h1.documentFirstHeading  Reset Password
     # Contains password description ?
     Element should contain  css=#content-core form div:nth-of-type(2).field div.formHelp  Minimum 1 capital letter
@@ -57,7 +56,24 @@ Test register form without password
     Wait until page contains  Welcome  5
     Element should contain  css=h1.documentFirstHeading  Welcome
     ${message} =  Get The Last Sent Email
-    Should contain  ${message}  Your user account has been created
+    Should contain  ${message}  plone/passwordreset
+    ${reset_url} =  Extract reset url  ${message}
+    # go to reset form
+    Go to  ${PLONE_URL}/${reset_url}
+    # Contains password description ?
+    Element should contain  css=form[name="pwreset_action"] div:nth-of-type(2).field div.formHelp  Minimum 1 capital letter.
+    # Fill form
+    Input text  userid  rocky
+    Input text  password  12345
+    Input text  password2  12345
+    Click button  css=form[name="pwreset_action"] input[type="submit"]
+    # Reacts with bad password
+    Element should contain  css=div.error div  Minimum 1 capital letter.
+    Input text  userid  rocky
+    Input text  password  ABCDEFGHIJabcdefghij1!
+    Input text  password2  ABCDEFGHIJabcdefghij1!
+    Click button  css=form[name="pwreset_action"] input[type="submit"]
+    Element should contain  css=div.documentDescription  Your password has been set successfully.
 
 Test reset form
     # create the user
