@@ -66,41 +66,13 @@ Test new user form
     Disable autologin
 
 Test change password form
-    Log in  test-user  secret
-    Go to  ${PLONE_URL}/@@change-password
-    # Element should contain  css=h1.documentFirstHeading  Reset Password
-    # Element should contain  css=#content .documentDescription  Change Password
-    # Contains password description ?
-    Element should be visible  jquery=div.formHelp:contains('Minimum 1 capital letter.')
-    # Reacts with bad password
-    Input text  name=form.current_password  secret
-    Input text  name=form.new_password  12345
-    Input text  name=form.new_password_ctl  12345
-    Click button  id=form.actions.reset_passwd
-    # Redirected on same page
-    Element should be visible  jquery=div.error>div:contains("This password doesn't match requirements for passwords")
-    # Accepts well formed password
-    Input text  name=form.current_password  secret
-    Input text  name=form.new_password  ABCDEFGHIJabcdefghij1!
-    Input text  name=form.new_password_ctl  ABCDEFGHIJabcdefghij1!
-    Click button  id=form.actions.reset_passwd
-    # Redirected on same page
-    Element should be visible  jquery=dl.portalMessage dd:contains('Password changed')
-    Log out
+    Test change password form
 
 Test register form without password
-    Own passwords registration disabled
-    Go to  ${PLONE_URL}/@@register
-    # Contains password description ?
-    Element should not be visible  css=#formfield-form-password
-    # Fill form
-    Input text  name=form.username  rocky
-    Input text  name=form.email  rocky@balboa.com
-    Click button  id=form.actions.register
-    # Redirected
-    Element should contain  css=h1.documentFirstHeading  Welcome
-    ${message} =  Get The Last Sent Email
-    Should contain  ${message}  Your user account has been created
+    Test register form without password
+
+Test reset form
+    Test reset form
 
 *** Keywords ***
 Test Setup

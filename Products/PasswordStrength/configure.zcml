@@ -10,6 +10,7 @@
 <!--  <five:registerPackage package="." initialize=".initialize" /> -->
   <include package="collective.monkeypatcher" file="meta.zcml" />
   <include file="profiles.zcml" />
+  <include file="skins.zcml" />
 
     <monkey:patch
       preconditions="Products.CMFPlone-=4.2.99"
