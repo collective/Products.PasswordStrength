@@ -26,7 +26,7 @@ Test change password form
     # Element should contain  css=h1.documentFirstHeading  Reset Password
     # Element should contain  css=#content .documentDescription  Change Password
     # Contains password description ?
-    Element should be visible  jquery=div.formHelp:contains('Minimum 1 capital letter.')
+    Element should contain  css=#content-core form div:nth-of-type(2).field div.formHelp  Minimum 1 capital letter
     # Reacts with bad password
     Input text  name=form.current_password  secret
     Input text  name=form.new_password  12345
