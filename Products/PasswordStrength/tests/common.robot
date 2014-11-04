@@ -22,6 +22,7 @@ Own passwords registration disabled
 
 Test change password form
     Log in  test-user  secret
+    Sleep  5
     Go to  ${PLONE_URL}/@@change-password
     Wait until page contains  Reset Password  5
     # Element should contain  css=h1.documentFirstHeading  Reset Password
