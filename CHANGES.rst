@@ -6,7 +6,7 @@ Changes
 
 - Removed old code and templates
   [djay]
-- Added buildout and robot tests
+- Added buildout and robot tests for Plone 4.1, 4.2, 4.3
   [sgeulette]
 - Dont't skip password validation for manager
   [sgeulette]
