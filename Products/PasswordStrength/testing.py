@@ -1,14 +1,22 @@
 # -*- coding: utf-8 -*-
+import pkg_resources
+PLONE_VERSION = pkg_resources.get_distribution('Products.CMFPlone').version
 
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 
-from Products.CMFPlone.tests.robot.robot_setup import CMFPloneRemoteKeywords
 from plone.testing import z2
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 from plone.app.robotframework.testing import MOCK_MAILHOST_FIXTURE
+
+from tests.robot_setup import PasswordStrengthRemoteKeywords
+
+try:
+    from Products.CMFPlone.tests.robot.robot_setup import CMFPloneRemoteKeywords
+except ImportError:
+    from tests.backward_robot import CMFPloneRemoteKeywords
 
 
 class Fixture(PloneSandboxLayer):
@@ -37,7 +45,8 @@ FUNCTIONAL_TESTING = FunctionalTesting(
 )
 
 # Add interesting existing class to default libraries
-REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases = REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases + (CMFPloneRemoteKeywords,)
+REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases = REMOTE_LIBRARY_BUNDLE_FIXTURE.libraryBases + \
+    (CMFPloneRemoteKeywords, PasswordStrengthRemoteKeywords)
 
 ROBOT_TESTING = FunctionalTesting(
     bases=(

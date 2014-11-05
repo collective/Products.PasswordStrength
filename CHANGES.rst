@@ -1,14 +1,23 @@
 Changes
 =======
 
-0.3.2 (unreleased)
+0.4 (unreleased)
 ------------------
 
-- Added buildout and robot tests [sgeulette]
-- Dont't skip password validation for manager [sgeulette]
-- Skip password validation for generated password [sgeulette]
-- Added i18n and french translation. [sgeulette]
-- Added travis [sgeulette]
+- Removed old code and templates
+  [djay]
+- Added buildout and robot tests for Plone 4.1, 4.2, 4.3
+  [sgeulette]
+- Dont't skip password validation for manager
+  [sgeulette]
+- Skip password validation for generated password
+  [sgeulette]
+- Added i18n and french translation.
+  [sgeulette]
+- Added travis configuration
+  [sgeulette]
+- Added pwreset_form and test
+  [sgeulette]
 
 0.3.1 (2013-11-20)
 ------------------

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.3.2.dev0'
+version = '0.4.dev0'
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
@@ -38,6 +38,7 @@ setup(name='Products.PasswordStrength',
       install_requires=[
           'setuptools',
           'plone.api',
+          'collective.monkeypatcher',
           # -*- Extra requirements: -*-
           # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
       ],

@@ -12,7 +12,8 @@ This plugin contains a patch to plone to use PAS validation.
 Tests
 =====
 
-This package is tested using Travis CI. The current status is :
+This package is tested using Travis CI on Plone 4.1, 4.2, 4.3
+The current status is :
 
 .. image:: https://travis-ci.org/collective/Products.PasswordStrength.png
     :target: http://travis-ci.org/collective/Products.PasswordStrength
@@ -21,7 +22,7 @@ Requires
 ========
 
  - PlonePAS and its dependencies
- - Plone 4.3.
+ - Plone 4
 
 Installation
 ============

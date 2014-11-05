@@ -4,7 +4,6 @@
 *.EGG
 *.EGG-INFO
 *.html
-*.xml
 bin
 build
 develop-eggs
@@ -28,3 +27,5 @@ var
 .pydevproject
 .settings/
 *~
+output.xml
+

@@ -4,7 +4,7 @@
 import unittest2 as unittest
 
 from Products.PasswordStrength.testing import INTEGRATION_TESTING
-from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
+from Products.PasswordStrength.testing import PLONE_VERSION
 
 
 class TestInstall(unittest.TestCase):
@@ -28,4 +28,7 @@ class TestInstall(unittest.TestCase):
         self.assertFalse(self.installer.isProductInstalled('PasswordStrength'))
         self.setup.runAllImportStepsFromProfile('profile-Products.PasswordStrength:uninstall')
         auth_plugins = self.acl.plugins.getAllPlugins(plugin_type='IValidationPlugin')
-        self.assertEqual(auth_plugins['active'], ('password_policy', ))
+        if PLONE_VERSION >= '4.3':
+            self.assertEqual(auth_plugins['active'], ('password_policy', ))
+        else:
+            self.assertEqual(auth_plugins['active'], ())

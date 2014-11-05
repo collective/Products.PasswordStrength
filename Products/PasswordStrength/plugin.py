@@ -13,7 +13,7 @@ from OFS.Cache import Cacheable
 
 from Products.CMFPlone.RegistrationTool import RegistrationTool
 from Products.CMFPlone import PloneMessageFactory as _p
-from . import  _
+from . import _
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
 from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
@@ -39,8 +39,6 @@ RegistrationTool.origGeneratePassword = RegistrationTool.generatePassword
 def generatePassword(self):
     return "G-%s" % self.origGeneratePassword()
 
-RegistrationTool.generatePassword = generatePassword
-
 
 # Monkey patch of registration tool method to avoid skipping validation for manager
 def testPasswordValidity(self, password, confirm=None):
@@ -56,8 +54,6 @@ def testPasswordValidity(self, password, confirm=None):
                   u'Please try again.')
 
     return None
-
-RegistrationTool.testPasswordValidity = testPasswordValidity
 
 
 manage_addPasswordStrengthForm = PageTemplateFile(
