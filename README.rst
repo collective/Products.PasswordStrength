@@ -28,7 +28,7 @@ Requires
 ========
 
  - PlonePAS and its dependencies
- - Plone 4
+ - Plone 4.1, 4.2 or 4.3
 
 Installation
 ============
@@ -57,9 +57,7 @@ TODO
    (<div class="formHelp" i18n:translate="" tal:define="constrains python:context.portal_registration.testPasswordValidity('');">
    Enter your new password. <span i18n:name="errors" tal:replace="constrains"/></div>)
 
-2. Patch or modify passwordreset view to display directly the password constraints
-
-3. Do password expiration
+2. Do password expiration
 
 
 License
