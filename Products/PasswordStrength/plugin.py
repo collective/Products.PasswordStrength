@@ -254,6 +254,10 @@ class CustomPasswordError(ValidationError):
     __doc__ = _("This password doesn't match requirements for passwords")
 
 def validate(self, value):
+    # Don't validate when there is no context
+    if not self.context:
+        return
+
     try:
         existing = bool(self.get(self.context))
     except AttributeError:
