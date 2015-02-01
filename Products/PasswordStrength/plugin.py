@@ -43,7 +43,7 @@ def generatePassword(self):
 # Monkey patch of registration tool method to avoid skipping validation for manager
 def testPasswordValidity(self, password, confirm=None):
     # We escape the test if it looks like a generated password (with default length of 56 chars)
-    if password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
+    if password is not None and password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
         return None
     err = self.pasValidation('password', password)
     if err:
@@ -227,6 +227,9 @@ def validate(self, value):
             skip = True
     else:
         context = self.context
+    # context is None in the context of a schema.Password field when Zope starts
+    if context is None:
+        return
     if not skip:
         reg_tool = getToolByName(context, 'portal_registration')
         errors = reg_tool.testPasswordValidity(value)
