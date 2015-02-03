@@ -227,11 +227,13 @@ def validate(self, value):
             skip = True
     else:
         context = self.context
-    # context is None in the context of a schema.Password field when Zope starts
-    if context is None:
-        return
     if not skip:
-        reg_tool = getToolByName(context, 'portal_registration')
+        # no context for a schema.Password field when Zope starts (issue #6)
+        # no acquisition for a RecordsProxy object
+        try:
+            reg_tool = getToolByName(context, 'portal_registration')
+        except AttributeError:
+            return
         errors = reg_tool.testPasswordValidity(value)
         if errors:
             raise CustomPasswordError(errors)
