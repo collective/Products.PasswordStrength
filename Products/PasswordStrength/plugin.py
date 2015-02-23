@@ -157,8 +157,7 @@ class PasswordStrength(BasePlugin, Cacheable):
         i = 1
         for reg, err in DEFAULT_POLICIES:
             setattr(self, 'p%i_re' % i, reg)
-            setattr(self, 'p%i_err' % i, translate(err, domain='Products.PasswordStrength',
-                                                   context=self.portal.REQUEST).encode('utf8'))
+            setattr(self, 'p%i_err' % i, err)
             i += 1
 
     security.declarePrivate('validateUserInfo')
@@ -174,7 +173,7 @@ class PasswordStrength(BasePlugin, Cacheable):
         """
 
         errors = []
-
+        site = portal.getSite()
         if set_info and set_info.get('password', None) is not None:
             password = set_info['password']
             i = 1
@@ -185,7 +184,8 @@ class PasswordStrength(BasePlugin, Cacheable):
                 if not re.match(reg, password):
                     err = getattr(self, 'p%i_err' % i, None)
                     if err:
-                        errors += [err.decode('utf8')]
+                        errors += [translate(err, domain='Products.PasswordStrength',
+                                                   context=site.REQUEST)]
                 i += 1
 
             errors = [{'id': 'password', 'error': e} for e in errors]
