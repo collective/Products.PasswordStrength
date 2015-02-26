@@ -184,8 +184,8 @@ class PasswordStrength(BasePlugin, Cacheable):
                 if not re.match(reg, password):
                     err = getattr(self, 'p%i_err' % i, None)
                     if err:
-                        errors += [translate(err, domain='Products.PasswordStrength',
-                                                   context=site.REQUEST)]
+                        errors += [translate(err.decode('utf8'), domain='Products.PasswordStrength',
+                                             context=site.REQUEST)]
                 i += 1
 
             errors = [{'id': 'password', 'error': e} for e in errors]
