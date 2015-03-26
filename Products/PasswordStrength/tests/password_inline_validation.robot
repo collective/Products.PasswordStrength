@@ -35,6 +35,7 @@ Test register form
     Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
     Click button  id=form.actions.register
     # Redirected
+    Wait until page contains  Welcome  5
     Element should contain  css=h1.documentFirstHeading  Welcome
 
 Test new user form
@@ -61,6 +62,7 @@ Test new user form
     Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
     Click button  id=form.actions.register
     # Redirected
+    Wait until page contains  Users Overview  5
     Element should contain  css=h1.documentFirstHeading  Users Overview
     Page should contain element  css=input[value="rocky"]
     Disable autologin

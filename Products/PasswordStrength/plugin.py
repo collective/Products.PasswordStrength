@@ -152,7 +152,6 @@ class PasswordStrength(BasePlugin, Cacheable):
     def __init__(self, id, title=None):
         self._id = self.id = id
         self.title = title
-        self.portal = portal.getSite()
 
         i = 1
         for reg, err in DEFAULT_POLICIES:
