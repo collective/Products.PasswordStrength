@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="passwordstrength" version="20100622-01"
+              handler="Products.PasswordStrength.setuphandlers.removePasswordStrength"
+              title="PasswordStrength uninstall">
+    PasswordStrength uninstallation step.
+  </import-step>
+</import-steps>

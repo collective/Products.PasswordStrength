@@ -1,7 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="PasswordStrength">
+    i18n_domain="Products.PasswordStrength">
 
   <genericsetup:registerProfile
       name="default"
@@ -9,6 +9,25 @@
       directory="profiles/default"
       description="PAS plugin that ensures strong passwords."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <!-- don't display this profile on site creation page -->
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="PasswordStrength Uninstall"
+      directory="profiles/uninstall"
+      description='Uninstall profile for the "PasswordStrength" Plone theme.'
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      />
+
+  <genericsetup:registerProfile
+      name="reset"
+      title="PasswordStrength All users passwords reset"
+      directory="profiles/reset"
+      description='Users passwords reset.'
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       />
 
 </configure>

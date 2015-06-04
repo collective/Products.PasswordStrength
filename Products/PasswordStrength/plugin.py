@@ -1,4 +1,3 @@
-
 """PasswordStrength.
     Rejects passwords which aren't strong enough
 """
@@ -7,94 +6,60 @@ __author__ = "Dylan Jay <software@pretaweb.com>"
 
 import logging
 
-from urllib import quote, unquote
-
-from BTrees.OOBTree import OOBTree
-from DateTime import DateTime
-from AccessControl import ClassSecurityInfo, Permissions
-from AccessControl.Permissions import view
-from AccessControl import AuthEncoding
+from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.Cache import Cacheable
-from OFS.Folder import Folder
 
-from zExceptions import Unauthorized
-
+from Products.CMFPlone.RegistrationTool import RegistrationTool
+from Products.CMFPlone import PloneMessageFactory as _p
+from . import _
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
-from Products.PluggableAuthService.permissions import ManageUsers
 from Products.PluggableAuthService.utils import classImplements
-from Products.PluggableAuthService.interfaces.plugins import \
-    IValidationPlugin, IPropertiesPlugin
-
+from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
 import re
+from zope.i18n import translate
+from plone.api import portal
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
-from patch import wrapAllMethods
-from Products.CMFPlone.RegistrationTool import RegistrationTool
-import hashlib
-import random
-import pkg_resources
-try:
-    pkg_resources.get_distribution('plone.app.users')
-    from plone.app.users.browser.personalpreferences import IPasswordSchema
-except pkg_resources.DistributionNotFound:
-    from zope.interface import Interface
-    class IPasswordSchema(Interface):
-        pass
-from zope.i18nmessageid import MessageFactory
+from plone.app.users.browser.personalpreferences import IPasswordSchema
 
-_ = MessageFactory('PasswordStrength')
 log = logging.getLogger('PasswordStrength')
 
 
 PROJECTNAME = 'PasswordStrength'
 PLUGIN_ID = 'password_strength_plugin'
-PLUGIN_TITLE = _(u'Create your own rules for enforcing password strength')
+PLUGIN_TITLE = _('Create your own rules for enforcing password strength')
+
+RegistrationTool.origGeneratePassword = RegistrationTool.generatePassword
 
 
+# Monkey patch of registration tool method to mark generated password
+# Don't think it decreases security... ?
+def generatePassword(self):
+    return "G-%s" % self.origGeneratePassword()
 
 
+# Monkey patch of registration tool method to avoid skipping validation for manager
+def testPasswordValidity(self, password, confirm=None):
+    # We escape the test if it looks like a generated password (with default length of 56 chars)
+    if password is not None and password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
+        return None
+    err = self.pasValidation('password', password)
+    if err:
+        return err
 
-class RegistrationToolPatch:
-    def testPasswordValidity(self, password, confirm=None):
+    if confirm is not None and confirm != password:
+        return _p(u'Your password and confirmation did not match. '
+                  u'Please try again.')
 
-        """ Verify that the password satisfies the portal's requirements.
-
-        o If the password is valid, return None.
-        o If not, return a string explaining why.
-        """
-        if confirm is not None and confirm != password:
-            return ( _(u'Your password and confirmation did not match. '
-                   + 'Please try again.') )
-
-        if not password:
-            err = [ _(u'You must enter a password.') ]
-        else:
-            err = []
-
-        # Use PAS to test validity
-        pas_instance = self.acl_users
-        plugins = pas_instance._getOb('plugins')
-        validators = plugins.listPlugins(IValidationPlugin)
-        for validator_id, validator in validators:
-            user = None
-            set_id = ''
-            set_info = {'password':password}
-            errors = validator.validateUserInfo( user, set_id, set_info )
-            err += [info['error'] for info in errors if info['id'] == 'password' ]
-        if err:
-            return ' '.join(err)
-        else:
-            return None
-
-wrapAllMethods(RegistrationToolPatch,RegistrationTool)
+    return None
 
 
 manage_addPasswordStrengthForm = PageTemplateFile(
     'www/passwordStrengthAdd',
     globals(),
-    __name__='manage_addPasswordStrengthForm' )
+    __name__='manage_addPasswordStrengthForm')
+
 
 def manage_addPasswordStrength(dispatcher,
                                id,
@@ -102,8 +67,7 @@ def manage_addPasswordStrength(dispatcher,
                                REQUEST=None):
     """Add a PasswordStrength plugin to a Pluggable Auth Service."""
 
-    obj = PasswordStrength(id, title
-                           )
+    obj = PasswordStrength(id, title)
     dispatcher._setObject(obj.getId(), obj)
 
     if REQUEST is not None:
@@ -111,13 +75,12 @@ def manage_addPasswordStrength(dispatcher,
                                      'PasswordStrength+plugin+added.'
                                      % dispatcher.absolute_url())
 
-DEFUALT_POLICIES = [(r'.{20}.*','Minimum 20 characters.')
-                    ,(r'.*[A-Z].*','Minimum 1 capital letter.')
-                    ,(r'.*[a-z].*','Minimum 1 lower case letter.')
-                    ,(r'.*[0-9].*','Minimum 1 number.')
-                    ,(r'.*[^0-9a-zA-Z ].*','Minimum 1 non-alpha character.')
+DEFAULT_POLICIES = [(r'.{10}.*', 'Minimum 10 characters'),
+                    (r'.*[A-Z].*', 'Minimum 1 capital letter'),
+                    (r'.*[a-z].*', 'Minimum 1 lower case letter'),
+                    (r'.*[0-9].*', 'Minimum 1 number'),
+                    (r'.*[^0-9a-zA-Z ].*', 'Minimum 1 non-alpha character'),
                     ]
-
 
 
 class PasswordStrength(BasePlugin, Cacheable):
@@ -128,80 +91,75 @@ class PasswordStrength(BasePlugin, Cacheable):
     meta_type = 'Password Strength Plugin'
     security = ClassSecurityInfo()
 
-    _properties = ( { 'id'    : 'title'
-                    , 'label' : 'Title'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p1_re'
-                    , 'label' : 'Policy 1 Regular Expression'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p1_err'
-                    , 'label' : 'Policy 1 Error Message'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p2_re'
-                    , 'label' : 'Policy 2 Regular Expression'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p2_err'
-                    , 'label' : 'Policy 2 Error Message'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p3_re'
-                    , 'label' : 'Policy 3 Regular Expression'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p3_err'
-                    , 'label' : 'Policy 3 Error Message'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p4_re'
-                    , 'label' : 'Policy 4 Regular Expression'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p4_err'
-                    , 'label' : 'Policy 4 Error Message'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p5_re'
-                    , 'label' : 'Policy 5 Regular Expression'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  , { 'id'    : 'p5_err'
-                    , 'label' : 'Policy 5 Error Message'
-                    , 'type'  : 'string'
-                    , 'mode'  : 'w'
-                    }
-                  )
-
+    _properties = ({'id': 'title',
+                    'label': 'Title',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p1_re',
+                    'label': 'Policy 1 Regular Expression',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p1_err',
+                    'label': 'Policy 1 Error Message',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p2_re',
+                    'label': 'Policy 2 Regular Expression',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p2_err',
+                    'label': 'Policy 2 Error Message',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p3_re',
+                    'label': 'Policy 3 Regular Expression',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p3_err',
+                    'label': 'Policy 3 Error Message',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p4_re',
+                    'label': 'Policy 4 Regular Expression',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p4_err',
+                    'label': 'Policy 4 Error Message',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p5_re',
+                    'label': 'Policy 5 Regular Expression',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   {'id': 'p5_err',
+                    'label': 'Policy 5 Error Message',
+                    'type': 'string',
+                    'mode': 'w',
+                    },
+                   )
 
     def __init__(self, id, title=None):
         self._id = self.id = id
         self.title = title
 
         i = 1
-        for reg,err in DEFUALT_POLICIES:
+        for reg, err in DEFAULT_POLICIES:
             setattr(self, 'p%i_re' % i, reg)
             setattr(self, 'p%i_err' % i, err)
-            i+=1
-
-
-
+            i += 1
 
     security.declarePrivate('validateUserInfo')
-    def validateUserInfo(self, user, set_id, set_info ):
-
+    def validateUserInfo(self, user, set_id, set_info):
         """ -> ( error_info_1, ... error_info_N )
 
         o Returned values are dictionaries, containing at least keys:
@@ -213,10 +171,9 @@ class PasswordStrength(BasePlugin, Cacheable):
         """
 
         errors = []
-
+        site = portal.getSite()
         if set_info and set_info.get('password', None) is not None:
             password = set_info['password']
-
             i = 1
             while True:
                 reg = getattr(self, 'p%i_re' % i, None)
@@ -224,21 +181,17 @@ class PasswordStrength(BasePlugin, Cacheable):
                     break
                 if not re.match(reg, password):
                     err = getattr(self, 'p%i_err' % i, None)
-                    errors += [err]
+                    if err:
+                        errors += [translate(err.decode('utf8'), domain='Products.PasswordStrength',
+                                             context=site.REQUEST)]
                 i += 1
 
-            errors = [{'id':'password','error':e} for e in errors]
+            errors = [{'id': 'password', 'error': e} for e in errors]
         return errors
 
-    def getPropertiesForUser(self, user, request=None):
-        # HACK to get
-        hash = hashlib.md5(str(random.random())).hexdigest()
-        return {'generated_password':'A-'+hash}
 
 classImplements(PasswordStrength,
                 IValidationPlugin)
-classImplements(PasswordStrength,
-                IPropertiesPlugin)
 
 InitializeClass(PasswordStrength)
 
@@ -248,10 +201,11 @@ InitializeClass(PasswordStrength)
 from zope.schema import Password
 from zope.schema.interfaces import ValidationError
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
+
 
 class CustomPasswordError(ValidationError):
     __doc__ = _("This password doesn't match requirements for passwords")
+
 
 def validate(self, value):
     try:
@@ -272,7 +226,12 @@ def validate(self, value):
     else:
         context = self.context
     if not skip:
-        reg_tool = getToolByName(context, 'portal_registration')
+        # no context for a schema.Password field when Zope starts (issue #6)
+        # no acquisition for a RecordsProxy object
+        try:
+            reg_tool = getToolByName(context, 'portal_registration')
+        except AttributeError:
+            return
         errors = reg_tool.testPasswordValidity(value)
         if errors:
             raise CustomPasswordError(errors)

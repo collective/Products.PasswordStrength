@@ -5,10 +5,8 @@
     meta_type="Filesystem Directory View"
     directory="Products.PasswordStrength:skins/PasswordStrength_public"/>
 
-<!--
- <skin-path name="Plone Default" based-on="Plone Default">
+ <skin-path name="*">
   <layer name="PasswordStrength_public" insert-after="custom"/>
  </skin-path>
--->
 
 </object>

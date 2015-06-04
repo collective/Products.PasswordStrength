@@ -6,14 +6,15 @@ __author__ = "Dylan Jay <software@pretaweb.com"
 
 from AccessControl.Permissions import add_user_folders
 from Products.PluggableAuthService import registerMultiPlugin
-from plugin import PasswordStrength, \
-                   manage_addPasswordStrength, \
-                   manage_addPasswordStrengthForm
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory("Products.PasswordStrength")
+from plugin import PasswordStrength, manage_addPasswordStrength, manage_addPasswordStrengthForm
+
 
 def initialize(context):
     """Initialize the PasswordStrength plugin."""
     registerMultiPlugin(PasswordStrength.meta_type)
-    
+
     context.registerClass(PasswordStrength,
                           permission=add_user_folders,
                           constructors=(manage_addPasswordStrengthForm,
@@ -21,6 +22,5 @@ def initialize(context):
                           #icon='www/noduplicatelogin.png',
                           visibility=None,
                           )
-
 
 PROJECTNAME = "PasswordStrength"
