@@ -65,7 +65,7 @@ TODO
 
 
 Contribute
-----------
+==========
 
 - Source Code: https://github.com/collective/Products.PasswordStrength/
 - Issue Tracker: https://github.com/collective/Products.PasswordStrength/issues

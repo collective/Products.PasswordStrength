@@ -15,7 +15,7 @@ install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - sed -ie "s#buildout.cfg#buildout-$PLONE_VERSION.cfg#" travis.cfg
   - mkdir -p buildout-cache/{downloads,eggs}
-  - python bootstrap.py -c travis.cfg -v 2.2.1
+  - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg -N
 before_script:
   - "export DISPLAY=:99.0"
