@@ -4,6 +4,8 @@ Changes
 0.4 (unreleased)
 ------------------
 
+- Updated Spanish translation.
+  [macagua]
 - Removed old code and templates
   [djay]
 - Added buildout and robot tests for Plone 4.1, 4.2, 4.3
