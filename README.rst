@@ -4,7 +4,7 @@ PasswordStrength
 This Pluggable Authentication Service (PAS) plugin validates
 passwords against regular expression rules. These rules can
 ensure a passwords strength such as minimum lenth and required
-characthers.
+characters.
 This plugin contains a patch to plone to use PAS validation.
 
 Requires
