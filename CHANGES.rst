@@ -21,7 +21,7 @@ Changes
 - Added pwreset_form and test
   [sgeulette]
 
-0.3.2 (unreleased)
+0.3.2 (2015-06-05)
 ------------------
 
 - Updated README file. [macagua]
