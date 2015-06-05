@@ -1,8 +1,8 @@
 Changes
 =======
 
-0.4 (unreleased)
-------------------
+0.4 (2015-06-05)
+----------------
 
 - Updated Spanish translation.
   [macagua]
