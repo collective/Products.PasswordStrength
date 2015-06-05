@@ -1,16 +1,8 @@
-include *.txt
-include *.py
-include *.rst
-include .travis.yml
-include *.cfg
-recursive-include Extensions *.py
-recursive-include Products *.cpt
-recursive-include Products *.metadata
-recursive-include Products *.txt
-recursive-include Products *.xml
-recursive-include Products *.zcml
-recursive-include Products *.zpt
-recursive-include Products *.po
-recursive-include Products *.pot
+include *.txt *.rst
+recursive-include Products *.zcml *.xml *.txt
+recursive-include Products *.cpt *.metadata *.zpt
+recursive-include Products *.po *.pot
 recursive-include Products *.robot
-recursive-include Products *.sh
+exclude bootstrap.py *.cfg *.yml
+recursive-exclude Products *.sh
+
