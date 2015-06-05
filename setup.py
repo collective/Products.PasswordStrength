@@ -21,7 +21,7 @@ setup(
     ),
     # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Plugins",
         "Environment :: Web Environment",
         "Framework :: Plone :: 4.1",
