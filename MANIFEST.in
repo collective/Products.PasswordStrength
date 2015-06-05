@@ -1,10 +1,14 @@
-include *.txt
+include *.txt *.rst
 recursive-include Extensions *.py
 recursive-include Products *.cpt
 recursive-include Products *.metadata
+recursive-include Products *.po
+recursive-include Products *.pot
 recursive-include Products *.pt
 recursive-include Products *.txt
 recursive-include Products *.vpy
 recursive-include Products *.xml
 recursive-include Products *.zcml
 recursive-include Products *.zpt
+exclude *.cfg bootstrap.py
+recursive-exclude Products *.sh
