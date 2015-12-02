@@ -15,24 +15,24 @@ Test Teardown  Close all browsers
 Test register form
     Go to  ${PLONE_URL}/@@register
     # Contains password description ?
-    Element should contain  css=#formfield-form-password .formHelp  Minimum 1 capital letter.
+    Hint for  Password  Element should contain  Minimum 1 capital letter.
     # Fill form
-    Input text  name=form.username  rocky
-    Input text  name=form.email  rocky@balboa.com
+    Input for  User Name  Input text  rocky
+    Input for  E-mail  Input text  rocky@balboa.com
     # Reacts with bad password
-    Input text  name=form.password  12345
-    Input text  name=form.password_ctl  12345
-    Click button  id=form.actions.register
-    Element should be visible  css=#formfield-form-password .fieldErrorBox
-    Element should contain  css=#formfield-form-password .fieldErrorBox  This password doesn't match requirements for passwords
-    Element should be visible  css=#formfield-form-password_ctl .fieldErrorBox
-    Element should contain  css=#formfield-form-password_ctl .fieldErrorBox  This password doesn't match requirements for passwords
+    Input for  Password  Input text    12345
+    Input for  Confirm password  Input text  12345
+    Click button  Register
+    Error for  Password  Element should be visible
+    Error for  Password  Element should contain   This password doesn't match requirements for passwords
+    Error for  Confirm password  Element should be visible
+    Error for  Confirm password  Element should contain  This password doesn't match requirements for passwords
     # Accepts well formed password
-    Input text  name=form.password  ABCDEFGHIJabcdefghij1!
-    Input text  name=form.password_ctl  ABCDEFGHIJabcdefghij1!
-    Click button  id=form.actions.register
-    Element should not be visible  css=#formfield-form-password .fieldErrorBox
-    Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
+    Input for  Password  Input text  ABCDEFGHIJabcdefghij1!
+    Input for  Confirm password  Input text  ABCDEFGHIJabcdefghij1!
+    Click button  Register
+    Error for  Password  Element should not be visible
+    Error for  Confirm password  Element should not be visible
     # Redirected
     Wait until page contains  Welcome  5
     Element should contain  css=h1.documentFirstHeading  Welcome
@@ -41,27 +41,27 @@ Test new user form
     Enable autologin as  Manager
     Go to  ${PLONE_URL}/@@new-user
     # Contains password description ?
-    Element should contain  css=#formfield-form-password .formHelp  Minimum 1 capital letter.
+    Hint for  Password  Element should contain   Minimum 1 capital letter.
     # Fill form
-    Input text  name=form.username  rocky
-    Input text  name=form.email  rocky@balboa.com
+    Input for  User Name  Input text  rocky
+    Input for  E-mail  Input text  rocky@balboa.com
     # Reacts with bad password
-    Input text  name=form.password  12345
-    Input text  name=form.password_ctl  12345
-    Click button  id=form.actions.register
-    Element should be visible  css=#formfield-form-password .fieldErrorBox
-    Element should contain  css=#formfield-form-password .fieldErrorBox  This password doesn't match requirements for passwords
-    Element should be visible  css=#formfield-form-password_ctl .fieldErrorBox
-    Element should contain  css=#formfield-form-password_ctl .fieldErrorBox  This password doesn't match requirements for passwords
+    Input for  Password  Input text  12345
+    Input for  Confirm password  Input text  12345
+    Click button  Register
+    Error for  Password  Element should be visible
+    Error for  Password  Element should contain  This password doesn't match requirements for passwords
+    Error for  Confirm password  Element should be visible
+    Error for  Confirm password  Element should contain  This password doesn't match requirements for passwords
     # Accepts well formed password
-    Input text  name=form.password  ABCDEFGHIJabcdefghij1!
-    Input text  name=form.password_ctl  ABCDEFGHIJabcdefghij1!
-    Click button  id=form.actions.register
-    Element should not be visible  css=#formfield-form-password .fieldErrorBox
-    Element should not be visible  css=#formfield-form-password_ctl .fieldErrorBox
+    Input for  Password  Input text  ABCDEFGHIJabcdefghij1!
+    Input for  Confirm password  Input text  ABCDEFGHIJabcdefghij1!
+    Click button  Register
+    Error for  Password  Element should not be visible
+    Error for  Confirm password  Element should not be visible
     # Redirected
-    Wait until page contains  Users Overview  5
-    Element should contain  css=h1.documentFirstHeading  Users Overview
+    Wait until page contains  Add New User  5
+    Element should contain  css=h1.documentFirstHeading  Users and Groups
     Page should contain element  css=input[value="rocky"]
     Disable autologin
 

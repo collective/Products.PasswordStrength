@@ -22,15 +22,28 @@
       ignoreOriginal="true"
       />
 
-    <monkey:patch
-      preconditions="Products.CMFPlone-=4.2.99"
-      description="Change password description schema"
-      class="plone.app.users.browser.personalpreferences.PasswordAccountPanel"
-      original="update"
-      replacement=".backward.updatePasswordAccountPanel"
-      docstringWarning="true"
-      ignoreOriginal="true"
-      />
+
+<!--<configure zcml:condition="have plone-4" />-->
+    <!--<monkey:patch-->
+      <!--preconditions="Products.CMFPlone-=4.2.99"-->
+      <!--description="Change password description schema"-->
+      <!--class="plone.app.users.browser.personalpreferences.PasswordAccountPanel"-->
+      <!--original="update"-->
+      <!--replacement=".backward.updatePasswordAccountPanel"-->
+      <!--docstringWarning="true"-->
+      <!--ignoreOriginal="true"-->
+      <!--/>-->
+<!--</configure>-->
+
+    <!--<monkey:patch-->
+      <!--preconditions="Products.CMFPlone+=5.0"-->
+      <!--description="Change password description schema"-->
+      <!--class="plone.app.users.browser.passwordpanel.PasswordPanel"-->
+      <!--original="update"-->
+      <!--replacement=".backward.updatePasswordAccountPanel"-->
+      <!--docstringWarning="true"-->
+      <!--ignoreOriginal="true"-->
+      <!--/>-->
 
     <monkey:patch
       preconditions="Products.CMFPlone-=4.2.99"
