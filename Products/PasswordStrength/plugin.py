@@ -47,8 +47,9 @@ def testPasswordValidity(self, password, confirm=None):
     # We escape the test if it looks like a generated password (with default length of 56 chars)
     if password is not None and password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
         return None
+    session = self.REQUEST.get('SESSION', {})
     # We also skip the test if a skip_password_check session variable is set
-    if password is not None and self.REQUEST['SESSION'].get('skip_password_check'):
+    if password is not None and session.get('skip_password_check'):
         return None
     err = self.pasValidation('password', password)
     if err:
