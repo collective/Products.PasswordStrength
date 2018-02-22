@@ -4,7 +4,8 @@ Changes
 0.4.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix can not change weak password
+  [ivanteoh]
 
 
 0.4 (2015-06-05)
