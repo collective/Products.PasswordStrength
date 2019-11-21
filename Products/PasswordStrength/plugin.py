@@ -7,7 +7,7 @@ __author__ = "Dylan Jay <software@pretaweb.com>"
 import logging
 
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from OFS.Cache import Cacheable
 
 from Products.CMFPlone.RegistrationTool import RegistrationTool
