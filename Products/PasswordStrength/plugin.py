@@ -12,7 +12,7 @@ from OFS.Cache import Cacheable
 
 from Products.CMFPlone.RegistrationTool import RegistrationTool
 from Products.CMFPlone import PloneMessageFactory as _p
-from . import _
+from Products.PasswordStrength import _
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
 from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin

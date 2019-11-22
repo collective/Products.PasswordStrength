@@ -16,7 +16,7 @@ from tests.robot_setup import PasswordStrengthRemoteKeywords
 try:
     from Products.CMFPlone.tests.robot.robot_setup import CMFPloneRemoteKeywords
 except ImportError:
-    from tests.backward_robot import CMFPloneRemoteKeywords
+    from Products.PasswordStrength.tests.backward_robot import CMFPloneRemoteKeywords
 
 
 class Fixture(PloneSandboxLayer):
