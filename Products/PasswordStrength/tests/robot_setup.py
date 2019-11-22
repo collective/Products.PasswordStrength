@@ -12,17 +12,17 @@ class PasswordStrengthRemoteKeywords(RemoteLibrary):
 
     def the_inline_validation_disabled(self):
         portal = getSite()
-        jst = getToolByName(portal, 'portal_javascripts')
-        js = jst.getResource('inline_validation.js')
-        if js and js.getEnabled():
-            js.setEnabled(False)
+        #jst = getToolByName(portal, 'portal_javascripts')
+        #js = jst.getResource('inline_validation.js')
+        #if js and js.getEnabled():
+        #    js.setEnabled(False)
 
     def the_inline_validation_enabled(self):
         portal = getSite()
-        jst = getToolByName(portal, 'portal_javascripts')
-        js = jst.getResource('inline_validation.js')
-        if js and not js.getEnabled():
-            js.setEnabled(True)
+        #jst = getToolByName(portal, 'portal_javascripts')
+        #js = jst.getResource('inline_validation.js')
+        #if js and not js.getEnabled():
+        #    js.setEnabled(True)
 
     def get_plone_version(self):
         return PLONE_VERSION

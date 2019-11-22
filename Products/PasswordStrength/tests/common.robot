@@ -20,7 +20,7 @@ Own passwords registration disabled
 
 Input for
     [arguments]     ${title}   ${extra_keyword}   @{list}
-    ${for}=  Get Element Attribute  xpath=//label[contains(., "${title}")]@for
+    ${for}=  Get Element Attribute  xpath=//label[contains(., "${title}")]  for
     Run Keyword     ${extra_keyword}  id=${for}   @{list}
 
 Hint for
