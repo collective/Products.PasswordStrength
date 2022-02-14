@@ -52,8 +52,7 @@ setup(
         'setuptools',
         'plone.api',
         'collective.monkeypatcher',
-        # -*- Extra requirements: -*-
-        # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
+        'six',
     ],
     extras_require={
         'test': [
@@ -61,7 +60,6 @@ setup(
             'plone.app.testing',
             'plone.browserlayer',
             'robotsuite',
-            'unittest2',
         ],
     },
     entry_points="""

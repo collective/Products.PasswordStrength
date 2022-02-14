@@ -4,23 +4,23 @@
 
 __author__ = "Dylan Jay <software@pretaweb.com>"
 
-import logging
-
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from OFS.Cache import Cacheable
-
-from Products.CMFPlone.RegistrationTool import RegistrationTool
+from plone.api import portal
 from Products.CMFPlone import PloneMessageFactory as _p
+from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.RegistrationTool import RegistrationTool
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PasswordStrength import _
+from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
-from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
-import re
 from zope.i18n import translate
-from plone.api import portal
 
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+import logging
+import re
+
 try:
     from plone.app.users.browser.personalpreferences import IPasswordSchema
 except:
@@ -189,7 +189,7 @@ class PasswordStrength(BasePlugin, Cacheable):
                 if not re.match(reg, password):
                     err = getattr(self, 'p%i_err' % i, None)
                     if err:
-                        errors += [translate(err.decode('utf8'), domain='Products.PasswordStrength',
+                        errors += [translate(safe_unicode(err), domain='Products.PasswordStrength',
                                              context=site.REQUEST)]
                 i += 1
 

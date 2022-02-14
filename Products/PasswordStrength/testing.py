@@ -11,7 +11,7 @@ from plone.testing import z2
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 from plone.app.robotframework.testing import MOCK_MAILHOST_FIXTURE
 
-from tests.robot_setup import PasswordStrengthRemoteKeywords
+from Products.PasswordStrength.tests.robot_setup import PasswordStrengthRemoteKeywords
 
 try:
     from Products.CMFPlone.tests.robot.robot_setup import CMFPloneRemoteKeywords

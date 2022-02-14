@@ -1,6 +1,6 @@
 import logging
 from smtplib import SMTPException
-from StringIO import StringIO
+from six import StringIO
 from Products.CMFCore.utils import getToolByName
 from Products.PasswordStrength.plugin import PROJECTNAME, PLUGIN_ID, PLUGIN_TITLE
 PLONE_POLICY = 'password_policy'
@@ -28,7 +28,7 @@ def install(portal):
     Different interfaces need to be activated for either case.
     """
     out = StringIO()
-    print >> out, "Installing %s:" % PROJECTNAME
+    print("Installing %s:" % PROJECTNAME, file=out)
 
     plone_pas = getToolByName(portal, 'acl_users')
 
@@ -42,13 +42,13 @@ def install(portal):
         activatePluginSelectedInterfaces(plone_pas, PLONE_POLICY, out, 'IValidationPlugin',
                                          disable=['IValidationPlugin'])
 
-    print >> out, "Successfully installed %s." % PROJECTNAME
+    print("Successfully installed %s." % PROJECTNAME, file=out)
     return out.getvalue()
 
 
 def uninstall(portal):
     out = StringIO()
-    print >> out, "Uninstalling %s:" % PROJECTNAME
+    print("Uninstalling %s:" % PROJECTNAME, file=out)
     plone_pas = getToolByName(portal, 'acl_users')
     existing = plone_pas.objectIds()
     if PLUGIN_ID in existing:
@@ -75,12 +75,12 @@ def activatePluginSelectedInterfaces(pas, plugin, out, selected_interfaces, disa
                 interface_name in selected_interfaces:
             if interface_name in disable:
                 disable.append(interface_name)
-                print >> out, " - Disabling: " + info['title']
+                print(" - Disabling: " + info['title'], file=out)
             else:
                 activatable.append(interface_name)
-                print >> out, " - Activating: " + info['title']
+                print(" - Activating: " + info['title'], file=out)
     plugin_obj.manage_activateInterfaces(activatable)
-    print >> out, plugin + " activated."
+    print(plugin + " activated.", file=out)
 
 
 def list_append(lst, elem):

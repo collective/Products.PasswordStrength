@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """Setup/installation tests for this package."""
-
-import unittest2 as unittest
-
 from Products.PasswordStrength.testing import INTEGRATION_TESTING
 from Products.PasswordStrength.testing import PLONE_VERSION
+from plone import api
+
+import unittest
+
+try:
+    from Products.CMFPlone.utils import get_installer
+except ImportError:
+    get_installer = None
 
 
 class TestInstall(unittest.TestCase):
@@ -14,7 +19,10 @@ class TestInstall(unittest.TestCase):
     def setUp(self):
         super(TestInstall, self).setUp()
         self.portal = self.layer['portal']
-        self.installer = self.portal.portal_quickinstaller
+        if get_installer:
+            self.installer = get_installer(self.portal, self.layer['request'])
+        else:
+            self.installer = api.portal.get_tool('portal_quickinstaller')
         self.acl = self.portal.acl_users
         self.setup = self.portal.portal_setup
 

@@ -18,7 +18,7 @@ Test register form
     Hint for  Password  Element should contain  Minimum 1 capital letter.
     # Fill form
     Input for  User name  Input text  rocky
-    Input for  E-mail  Input text  rocky@balboa.com
+    Input for  Email  Input text  rocky@balboa.com
     # Reacts with bad password
     Input for  Password  Input text  12345
     Input for  Confirm password  Input text  12345
@@ -45,7 +45,7 @@ Test new user form
     Hint for  Password  Element should contain  Minimum 1 capital letter.
     # Fill form
     Input for  User Name  Input text  rocky
-    Input for  E-mail  Input text  rocky@balboa.com
+    Input for  Email  Input text  rocky@balboa.com
     # Reacts with bad password
     Input for  Password  Input text  12345
     Input for  Confirm password  Input text  12345

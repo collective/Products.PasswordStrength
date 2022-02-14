@@ -1,10 +1,10 @@
-import unittest2 as unittest
-
 import robotsuite
 from Products.PasswordStrength.testing import ROBOT_TESTING
 from Products.PasswordStrength.testing import PLONE_VERSION
 from plone.testing import layered
 
+
+import unittest
 
 def test_suite():
     suite = unittest.TestSuite()

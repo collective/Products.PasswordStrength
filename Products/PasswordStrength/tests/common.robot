@@ -63,10 +63,10 @@ Test register form without password
     Own passwords registration disabled
     Go to  ${PLONE_URL}/@@register
     # Contains password description ?
-    Input for  Password  Element should not be visible
+    Element should not be visible  Input for  Password
     # Fill form
     Input for  User Name  Input text  rocky
-    Input for  E-mail  Input text  rocky@balboa.com
+    Input for  Email  Input text  rocky@balboa.com
     Click button  Register
     # Redirected
     Wait until page contains  Welcome  5
@@ -95,7 +95,7 @@ Test reset form
     # create the user
     Go to  ${PLONE_URL}/@@register
     Input for  User Name  Input text   rocky
-    Input for  E-mail  Input text  rocky@balboa.com
+    Input for  Email  Input text  rocky@balboa.com
     Input for  Password  Input text   ABCDEFGHIJabcdefghij1!
     Input for  Confirm password  Input text  ABCDEFGHIJabcdefghij1!
     Click button  Register
