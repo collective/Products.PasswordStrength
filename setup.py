@@ -53,6 +53,7 @@ setup(
         'plone.api',
         'collective.monkeypatcher',
         'six',
+        'z3c.jbot',
     ],
     extras_require={
         'test': [
