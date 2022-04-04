@@ -2,12 +2,13 @@ name: tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master, python3 ]
   pull_request:
   # Allow to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
   build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         config:
@@ -19,12 +20,11 @@ jobs:
         - ["3.7",   "plone60-py37"]
         - ["3.8",   "plone60-py38"]
         - ["3.9",   "plone60-py39"]
-    runs-on: ubuntu-latest
     name: ${{ matrix.config[1] }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.config[0] }}
     - name: Pip cache
