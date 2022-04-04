@@ -25,16 +25,21 @@ Input for
 
 Hint for
     [arguments]     ${title}   ${extra_keyword}   @{list}
-    Run Keyword     ${extra_keyword}  xpath=//label[contains(., "${title}")]/span[@class="formHelp"]   @{list}
+    Run Keyword     ${extra_keyword}  xpath=//label[contains(., "${title}")]/following::div[@class="form-text"]   @{list}
 
 Error for
     [arguments]     ${title}   ${extra_keyword}   @{list}
-    Run Keyword     ${extra_keyword}  xpath=//label[contains(., "${title}")]/following-sibling::div[@class="fieldErrorBox"]   @{list}
+    Run Keyword     ${extra_keyword}  xpath=//label[contains(., "${title}")]/following::div[@class="invalid-feedback"]   @{list}
 
 ## Common tests
 
 Test change password form
-    Log in  test-user  secret
+    # Log in  test-user  secret
+    Enable autologin as  Manager
+    @{roles} =  Create list  Contributor  Reviewer  Site Administrator
+    Create User  tester  password=testTEST123$  roles=@{roles}
+    Disable autologin
+    Log in  tester  testTEST123$
     Sleep  2
     Go to  ${PLONE_URL}/@@change-password
     # Element should contain  css=h1.documentFirstHeading  Reset Password
@@ -51,13 +56,13 @@ Test change password form
     # Redirected on same page
     Element should be visible  jquery=div.error>div:contains("This password doesn't match requirements for passwords")
     # Accepts well formed password
-    Input for  Current password  Input text  secret
+    Input for  Current password  Input text  testTEST123$
     Input for  New password  Input text  ABCDEFGHIJabcdefghij1!
     Input for  Confirm password  Input text  ABCDEFGHIJabcdefghij1!
     Click button  Change Password
     # Redirected on same page
-    Element should be visible  jquery=dl.portalMessage dd:contains('Password changed')
-    Log out
+    Element should be visible  jquery=div.portalMessage:contains('Password changed')
+    Go to  ${PLONE_URL}/logout
 
 Test register form without password
     Own passwords registration disabled
@@ -71,7 +76,8 @@ Test register form without password
     # Redirected
     Wait until page contains  Welcome  5
     Element should contain  css=h1.documentFirstHeading  Welcome
-    ${message} =  Get The Last Sent Email
+    ${message_bytes} =  Get The Last Sent Email
+    ${message} =  Decode Bytes To String  ${message_bytes}  utf-8
     Should contain  ${message}  plone/passwordreset
     ${reset_url} =  Extract reset url  ${message}
     # go to reset form
@@ -103,7 +109,8 @@ Test reset form
     # do a reset
     Go to  ${PLONE_URL}/mail_password_form?userid=rocky
     Click button  Start password reset
-    ${message} =  Get The Last Sent Email
+    ${message_bytes} =  Get The Last Sent Email
+    ${message} =  Decode Bytes To String  ${message_bytes}  utf-8
     Should contain  ${message}  plone/passwordreset
     ${reset_url} =  Extract reset url  ${message}
     # go to reset form

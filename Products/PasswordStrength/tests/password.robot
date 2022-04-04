@@ -61,7 +61,7 @@ Test new user form
     Error for  Confirm password  Element should not be visible
     # Redirected
     Wait until page contains  Add New User  5
-    Element should contain  css=h1.documentFirstHeading  Users and Groups
+    Element should contain  css=h1.documentFirstHeading  Users
     Page should contain element  css=input[value="rocky"]
     Disable autologin
 
@@ -82,7 +82,6 @@ Test Setup
     The self registration enabled
     The mail setup configured
     Own passwords registration enabled
-    The inline validation disabled
     ${plone_version} =  Get plone version
     Set global variable  ${plone_version}
     Disable autologin

@@ -27,13 +27,13 @@ class TestInstall(unittest.TestCase):
         self.setup = self.portal.portal_setup
 
     def test_product_installed(self):
-        self.assertTrue(self.installer.isProductInstalled('PasswordStrength'))
+        self.assertTrue(self.installer.is_product_installed('PasswordStrength'))
         auth_plugins = self.acl.plugins.getAllPlugins(plugin_type='IValidationPlugin')
         self.assertEqual(auth_plugins['active'], ('password_strength_plugin', ))
 
     def test_uninstall(self):
-        self.installer.uninstallProducts(['PasswordStrength'])
-        self.assertFalse(self.installer.isProductInstalled('PasswordStrength'))
+        self.installer.uninstall_product('PasswordStrength')
+        self.assertFalse(self.installer.is_product_installed('PasswordStrength'))
         self.setup.runAllImportStepsFromProfile('profile-Products.PasswordStrength:uninstall')
         auth_plugins = self.acl.plugins.getAllPlugins(plugin_type='IValidationPlugin')
         if PLONE_VERSION >= '4.3':
