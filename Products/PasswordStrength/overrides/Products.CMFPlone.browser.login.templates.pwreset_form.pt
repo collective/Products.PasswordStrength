@@ -90,7 +90,7 @@
                         <div tal:content="error" class="invalid-feedback">Validation error output</div>
 
                         <small class="formHelp text-muted"
-                            i18n:translate="help_new_password">
+                            tal:content="python:context.portal_registration.testPasswordValidity('')">
                             Enter your new password.
                         </small>
 
