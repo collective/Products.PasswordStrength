@@ -1,9 +1,8 @@
-import unittest2 as unittest
+from Products.PasswordStrength.testing import ROBOT_TESTING
+from plone.testing import layered
 
 import robotsuite
-from Products.PasswordStrength.testing import ROBOT_TESTING
-from Products.PasswordStrength.testing import PLONE_VERSION
-from plone.testing import layered
+import unittest
 
 
 def test_suite():
@@ -12,10 +11,4 @@ def test_suite():
         layered(robotsuite.RobotTestSuite('password.robot'),
                 layer=ROBOT_TESTING),
     ])
-    # inline validation
-    if PLONE_VERSION >= '4.3':
-        suite.addTests([
-            layered(robotsuite.RobotTestSuite('password_inline_validation.robot'),
-                    layer=ROBOT_TESTING),
-        ])
     return suite
