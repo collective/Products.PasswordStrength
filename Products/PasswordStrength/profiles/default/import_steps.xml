@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<import-steps>
-  <import-step id="passwordstrength" version="20100622-01"
-              handler="Products.PasswordStrength.setuphandlers.setupPasswordStrength"
-              title="PasswordStrength setup">
-    PasswordStrength installation step.
-  </import-step>
-</import-steps>

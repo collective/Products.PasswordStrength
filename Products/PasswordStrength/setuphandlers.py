@@ -2,22 +2,19 @@ import logging
 from smtplib import SMTPException
 from six import StringIO
 from Products.CMFCore.utils import getToolByName
+from plone import api
 from Products.PasswordStrength.plugin import PROJECTNAME, PLUGIN_ID, PLUGIN_TITLE
 PLONE_POLICY = 'password_policy'
 logger = logging.getLogger('Products.PasswordStrength: setuphandlers')
 
 
 def setupPasswordStrength(context):
-    if context.readDataFile('passwordstrength.txt') is None:
-        return
-    site = context.getSite()
+    site = api.portal.get()
     install(site)
 
 
 def removePasswordStrength(context):
-    if context.readDataFile('passwordstrength-uninstall.txt') is None:
-        return
-    site = context.getSite()
+    site = api.portal.get()
     uninstall(site)
 
 
@@ -95,9 +92,7 @@ def reset_passwords(context):
     """
         Reset all users passwords
     """
-    if context.readDataFile('passwordstrength_reset.txt') is None:
-        return
-    portal = context.getSite()
+    portal = api.porta.get()
     regtool = portal.portal_registration
     logs = []
     logger.info(list_append(logs, "Resetting all users passwords"))
