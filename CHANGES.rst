@@ -1,10 +1,11 @@
 Changes
 =======
 
-0.4.1 (unreleased)
+0.5.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add support for Python 3, Plone 5.2 and Plone 6. Drop support for Plone 5.1 and older.
+  [pbauer, djay]
 
 
 0.4 (2015-06-05)
