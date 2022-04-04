@@ -26,6 +26,8 @@ class Fixture(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         # Load ZCML
         import Products.PasswordStrength
+        import z3c.jbot
+        self.loadZCML(package=z3c.jbot)
         self.loadZCML(package=Products.PasswordStrength)
         # Install product and call its initialize() function
         z2.installProduct(app, 'Products.PasswordStrength')
