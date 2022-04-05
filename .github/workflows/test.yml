@@ -76,5 +76,5 @@ jobs:
             chromedriver --url-base=/wd/hub &
             sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
             sleep 2
-            PATH=$PATH:$PWD/chromedriver ROBOT_HTTP_PORT=55001 bin/test
+            PATH=$PATH:$PWD/chromedriver ROBOT_BROWSER=chrome ROBOT_HTTP_PORT=55001 bin/test
             cat /home/runner/work/Products.PasswordStrength/Products.PasswordStrength/parts/test/password/Test_register_form/output.xml
