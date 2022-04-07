@@ -224,12 +224,14 @@ def validate(self, value):
         return
 
     skip = False
+
+    # Do not validate old password when changing passwords as logged in user
+    if getattr(self, '__name__', '') == 'current_password':
+        skip = True
+
     if IPasswordSchema.providedBy(self.context):
         # We need to get the context's context
         context = self.context.context
-        # Do not validate existing passwords
-        if getattr(self, '__name__', '') == 'current_password':
-            skip = True
     else:
         context = self.context
     if not skip:
