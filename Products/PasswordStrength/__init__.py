@@ -8,7 +8,7 @@ from AccessControl.Permissions import add_user_folders
 from Products.PluggableAuthService import registerMultiPlugin
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory("Products.PasswordStrength")
-from plugin import PasswordStrength, manage_addPasswordStrength, manage_addPasswordStrengthForm
+from Products.PasswordStrength.plugin import PasswordStrength, manage_addPasswordStrength, manage_addPasswordStrengthForm
 
 
 def initialize(context):
