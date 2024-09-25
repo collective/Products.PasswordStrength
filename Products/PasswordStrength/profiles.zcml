@@ -9,6 +9,7 @@
       directory="profiles/default"
       description="PAS plugin that ensures strong passwords."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      post_handler=".setuphandlers.setupPasswordStrength"
       />
 
   <!-- don't display this profile on site creation page -->
@@ -19,6 +20,7 @@
       description='Uninstall profile for the "PasswordStrength" Plone theme.'
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFCore.interfaces.ISiteRoot"
+      post_handler=".setuphandlers.removePasswordStrength"
       />
 
   <genericsetup:registerProfile
@@ -28,6 +30,7 @@
       description='Users passwords reset.'
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFCore.interfaces.ISiteRoot"
+      post_handler=".setuphandlers.reset_passwords"
       />
 
 </configure>

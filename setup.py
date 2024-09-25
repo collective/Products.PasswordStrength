@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.4.1.dev0'
+version = '0.5.0.dev0'
 
 
 def read(*rnames):
@@ -24,16 +24,18 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Plugins",
         "Environment :: Web Environment",
-        "Framework :: Plone :: 4.1",
-        "Framework :: Plone :: 4.2",
-        "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 5.2",
+        "Framework :: Plone :: 6.0",
         "Framework :: Zope2",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Zope",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Systems Administration",
@@ -52,8 +54,8 @@ setup(
         'setuptools',
         'plone.api',
         'collective.monkeypatcher',
-        # -*- Extra requirements: -*-
-        # Products.PluggableAuthService is a dep, but can't be explicit in Plone 3.
+        'six',
+        'z3c.jbot',
     ],
     extras_require={
         'test': [
@@ -61,7 +63,6 @@ setup(
             'plone.app.testing',
             'plone.browserlayer',
             'robotsuite',
-            'unittest2',
         ],
     },
     entry_points="""

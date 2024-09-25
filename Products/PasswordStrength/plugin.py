@@ -4,23 +4,23 @@
 
 __author__ = "Dylan Jay <software@pretaweb.com>"
 
-import logging
-
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from OFS.Cache import Cacheable
-
-from Products.CMFPlone.RegistrationTool import RegistrationTool
+from plone.api import portal
 from Products.CMFPlone import PloneMessageFactory as _p
-from . import _
+from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.RegistrationTool import RegistrationTool
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from Products.PasswordStrength import _
+from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.utils import classImplements
-from Products.PluggableAuthService.interfaces.plugins import IValidationPlugin
-import re
 from zope.i18n import translate
-from plone.api import portal
 
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+import logging
+import re
+
 try:
     from plone.app.users.browser.personalpreferences import IPasswordSchema
 except:
@@ -47,7 +47,7 @@ def testPasswordValidity(self, password, confirm=None):
     # We escape the test if it looks like a generated password (with default length of 56 chars)
     if password is not None and password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
         return None
-    session = self.REQUEST.get('SESSION', {})
+    session = self.REQUEST.get('SESSION', {}) or {}
     # We also skip the test if a skip_password_check session variable is set
     if password is not None and session.get('skip_password_check'):
         return None
@@ -189,7 +189,7 @@ class PasswordStrength(BasePlugin, Cacheable):
                 if not re.match(reg, password):
                     err = getattr(self, 'p%i_err' % i, None)
                     if err:
-                        errors += [translate(err.decode('utf8'), domain='Products.PasswordStrength',
+                        errors += [translate(safe_unicode(err), domain='Products.PasswordStrength',
                                              context=site.REQUEST)]
                 i += 1
 
@@ -224,7 +224,8 @@ def validate(self, value):
         return
 
     skip = False
-    # Do not validate existing passwords
+
+    # Do not validate old password when changing passwords as logged in user
     if getattr(self, '__name__', '') == 'current_password':
         skip = True
 
