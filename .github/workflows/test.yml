@@ -33,7 +33,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          sudo apt-get install -y libxml2-dev libxslt-dev python-dev xvfb
+          sudo apt-get install -y libxml2-dev libxslt-dev xvfb
           pip install virtualenv wheel
       - uses: nanasess/setup-chromedriver@master
       - name: Cache multiple paths
