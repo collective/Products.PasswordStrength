@@ -1,7 +1,7 @@
 Changes
 =======
 
-0.5.0 (unreleased)
+0.5.0 (2024-09-26)
 ------------------
 
 - Add support for Python 3, Plone 5.2 and Plone 6. Drop support for Plone 5.1 and older.
