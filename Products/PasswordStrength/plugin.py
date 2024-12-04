@@ -45,6 +45,14 @@ def generatePassword(self):
 # Monkey patch of registration tool method to avoid skipping validation for manager
 def testPasswordValidity(self, password, confirm=None):
     # We escape the test if it looks like a generated password (with default length of 56 chars)
+    site = portal.getSite()
+    request = site.REQUEST
+
+    # Check if the request URL is for the login page
+    if request and request.URL.endswith('/login'):
+        # Skip password strength validation for login requests
+        return None
+    
     if password is not None and password.startswith('G-') and len(password) == len(self.origGeneratePassword()) + 2:
         return None
     session = self.REQUEST.get('SESSION', {}) or {}
