@@ -4,7 +4,8 @@ Changes
 0.5.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix broken markup in `pwreset_form.pt` template
+  [laulaz]
 
 
 0.5.0 (2024-09-26)
