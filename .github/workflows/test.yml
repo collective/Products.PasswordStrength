@@ -26,9 +26,9 @@ jobs:
           # - plone-version: '6.0'
           #   python-version: '2.7'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -37,7 +37,7 @@ jobs:
           pip install virtualenv wheel
       - uses: nanasess/setup-chromedriver@master
       - name: Cache multiple paths
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/buildout-cache
