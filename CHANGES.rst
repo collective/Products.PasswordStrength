@@ -4,6 +4,9 @@ Changes
 0.5.1 (unreleased)
 ------------------
 
+- Migrate package from flat-layout to src-layout
+  [laulaz]
+
 - Fix broken markup in `pwreset_form.pt` template
   [laulaz]
 
