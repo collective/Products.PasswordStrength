@@ -4,6 +4,9 @@ Changes
 0.5.1 (unreleased)
 ------------------
 
+- Do not validate the password of the login form (Plone 5.2+): a user with a weak password couldn't log in.
+  [chris-adam]
+
 - Migrate package from flat-layout to src-layout
   [laulaz]
 

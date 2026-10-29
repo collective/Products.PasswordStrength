@@ -26,6 +26,14 @@ try:
 except:
     from plone.app.users.browser.passwordpanel import IPasswordSchema
 
+try:
+    from plone.base.interfaces import ILoginFormSchema  # Plone 6
+except ImportError:
+    try:
+        from Products.CMFPlone.interfaces import ILoginFormSchema  # Plone 5.2
+    except ImportError:
+        ILoginFormSchema = None  # Plone 4: the login form isn't a z3c.form
+
 log = logging.getLogger('PasswordStrength')
 
 
@@ -227,6 +235,9 @@ def validate(self, value):
 
     # Do not validate old password when changing passwords as logged in user
     if getattr(self, '__name__', '') == 'current_password':
+        skip = True
+    # Do not validate the password typed in the login form
+    if ILoginFormSchema is not None and self.interface is ILoginFormSchema:
         skip = True
 
     if IPasswordSchema.providedBy(self.context):
