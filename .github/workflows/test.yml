@@ -14,12 +14,12 @@ jobs:
       matrix:
         plone-version:
           # - '5.2'
-          - '6.0'
+          - '6.2'
         python-version:
           # - '2.7'
           # - '3.7'
           # - '3.8'
-          - '3.9'
+          - '3.13'
         # exclude:
           # - plone-version: '5.2'
           #   python-version: '3.9'
@@ -64,7 +64,7 @@ jobs:
         if: ${{ matrix.python-version != '2.7'}}
         run: |
           python -m venv .
-          bin/pip install -r requirements.txt
+          bin/pip install -r requirements-${{ matrix.plone-version }}.txt
       - name: buildout
         run: |
           bin/buildout -t 10 -Nc test-${{ matrix.plone-version }}.x.cfg
