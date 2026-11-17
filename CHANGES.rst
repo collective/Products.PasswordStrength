@@ -7,6 +7,9 @@ Changes
 - Do not validate the password of the login form (Plone 5.2+): a user with a weak password couldn't log in.
   [chris-adam]
 
+- Read the Plone version of the test layers with `importlib.metadata`, `pkg_resources` is gone with setuptools 82+.
+  [chris-adam]
+
 - Migrate package from flat-layout to src-layout
   [laulaz]
 

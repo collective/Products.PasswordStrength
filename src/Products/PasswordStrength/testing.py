@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
-import pkg_resources
-PLONE_VERSION = pkg_resources.get_distribution('Products.CMFPlone').version
+try:
+    from importlib.metadata import version
+except ImportError:  # Python 2
+    from pkg_resources import get_distribution
+
+    def version(name):
+        return get_distribution(name).version
+
+
+PLONE_VERSION = version('Products.CMFPlone')
 
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
