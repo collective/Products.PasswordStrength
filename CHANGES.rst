@@ -16,6 +16,9 @@ Changes
 - Fix broken markup in `pwreset_form.pt` template
   [laulaz]
 
+- Used pkgutil-style namespace packages, so PEP 420 packages of the same namespace are not hidden.
+  [chris-adam]
+
 
 0.5.0 (2024-09-26)
 ------------------
