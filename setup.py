@@ -48,7 +48,6 @@ setup(
     license='BSD',
     packages=find_packages("src"),
     package_dir={"": "src"},
-    namespace_packages=['Products'],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
